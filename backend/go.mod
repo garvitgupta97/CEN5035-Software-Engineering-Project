@@ -1,4 +1,4 @@
-module backend
+module StudentUniverse
 
 go 1.17
 

@@ -2,11 +2,10 @@ package server
 
 import (
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
-func setRouter() *gin.Engine {
+func setRouter() * gin.Engine {
 
 	router := gin.Default()
 	router.RedirectTrailingSlash = true
