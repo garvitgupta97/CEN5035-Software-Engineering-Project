@@ -1,7 +1,7 @@
 package server
 
 import (
-	"StudentUniverse/StudentUniverseApp/Facade/DTO"
+	store "StudentUniverse/StudentUniverseApp/Facade/DTO"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -27,7 +27,7 @@ func signIn(ctx *gin.Context) {
 		return
 	}
 	for _, u := range store.Users {
-		if u.Username == user.Username && u.Password == user.Password {
+		if u.Email == user.Email && u.Password == user.Password {
 			ctx.JSON(http.StatusOK, gin.H{
 				"msg": "Signed in successfully.",
 				"jwt": "123456789",
