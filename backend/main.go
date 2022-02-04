@@ -1,7 +1,7 @@
 package main
-import (
-    Main "backend/gin_router"
-)
+
+import "StudentUniverse/StudentUniverseApp/Facade"
+
 func main() {
-    Main.InitRouter()
+	server.Start()
 }

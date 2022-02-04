@@ -1,7 +1,7 @@
 package server
 
 import (
-	"backend/su/internal/store"
+	"StudentUniverse/StudentUniverseApp/Facade/DTO"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
