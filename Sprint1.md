@@ -19,11 +19,7 @@ A social media platform for students to collaborate and help each other by shari
 - Created API'S for fetching all user's emails
 - Added Form Validation and user friendly errors for Sign In and Sign Up
 
-## UI Demo
-[Link to video] TBD (https://www.youtube.com/)
-
-## Backend Demo
-[Link to video] TBD(https://www.youtube.com/)
+## Frontend and Backend Demo Videos (https://uflorida-my.sharepoint.com/:f:/g/personal/divyanshshukla_ufl_edu/Eh4Y1V9TYd1Cpdw9hNoVIC0B30ev3kOAti18NUjH7bW6lA?e=hbiKtQ)
 
 ## Api documentation of backend services
 ### Api for user sign up
