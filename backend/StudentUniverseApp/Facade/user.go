@@ -4,6 +4,9 @@ import (
 	store "StudentUniverse/StudentUniverseApp/Facade/DTO"
 	"errors"
 	"fmt"
+
+	database "StudentUniverse/StudentUniverseApp/Facade/Database"
+
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,20 +17,27 @@ import (
 
 func signUp(ctx *gin.Context) {
 	user := new(store.User)
+	for _, u := range store.Users {
+		if u.Email == user.Email {
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
+		}
+	}
 	if err := ctx.Bind(user); err != nil {
-		
+
 		var verr validator.ValidationErrors
 		if errors.As(err, &verr) {
 			ctx.JSON(http.StatusBadRequest, gin.H{"errors": Simple(verr)})
 			return
 		}
 
-        log.Info().Err(err).Msg("unable to bind")
-		
+		log.Info().Err(err).Msg("unable to bind")
+
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Signup Fail": err.Error()})
 		return
 	}
+	database.InsertStudent(user.Email, user.Password)
 	store.Users = append(store.Users, user)
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "Signed up successfully.",
 		"jwt": "123456789",
@@ -51,18 +61,18 @@ func Simple(verr validator.ValidationErrors) map[string]string {
 func signIn(ctx *gin.Context) {
 	user := new(store.User)
 	if err := ctx.Bind(user); err != nil {
-		
+
 		var verr validator.ValidationErrors
 		if errors.As(err, &verr) {
 			ctx.JSON(http.StatusBadRequest, gin.H{"errors": Simple(verr)})
 			return
 		}
 
-        log.Info().Err(err).Msg("unable to bind")
-		
+		log.Info().Err(err).Msg("unable to bind")
+
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Sign in failed": err.Error()})
 		return
-		
+
 	}
 	for _, u := range store.Users {
 		if u.Email == user.Email && u.Password == user.Password {
@@ -74,4 +84,9 @@ func signIn(ctx *gin.Context) {
 		}
 	}
 	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"Sign in failed": "Sign in failed."})
+}
+
+func getUsers(ctx *gin.Context) {
+	usersList := database.GetUsers()
+	ctx.JSON(http.StatusOK, usersList)
 }

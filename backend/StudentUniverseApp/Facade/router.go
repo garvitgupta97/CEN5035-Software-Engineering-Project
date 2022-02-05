@@ -2,10 +2,11 @@ package server
 
 import (
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
-func setRouter() * gin.Engine {
+func setRouter() *gin.Engine {
 
 	router := gin.Default()
 	router.RedirectTrailingSlash = true
@@ -13,6 +14,7 @@ func setRouter() * gin.Engine {
 	{
 		api.POST("/signup", signUp)
 		api.POST("/signin", signIn)
+		api.POST("/getUsers", getUsers)
 	}
 
 	router.NoRoute(func(ctx *gin.Context) { ctx.JSON(http.StatusNotFound, gin.H{}) })
