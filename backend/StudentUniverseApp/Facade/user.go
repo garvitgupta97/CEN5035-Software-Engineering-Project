@@ -9,11 +9,17 @@ import (
 
 func signUp(ctx *gin.Context) {
 	user := new(store.User)
+	for _, u := range store.Users {
+		if u.Email == user.Email {
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
+		}
+	}
 	if err := ctx.Bind(user); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 		return
 	}
 	store.Users = append(store.Users, user)
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "Signed up successfully.",
 		"jwt": "123456789",
