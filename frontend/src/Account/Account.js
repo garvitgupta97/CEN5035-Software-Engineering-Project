@@ -1,6 +1,6 @@
 import React from 'react'
 import MenuBar from '../navigations/MenuBar'
-import Pricing from '../misc/Pricing'
+
 
 const Account = () => {
     return (
