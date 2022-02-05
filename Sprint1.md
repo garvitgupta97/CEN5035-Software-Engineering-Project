@@ -1,4 +1,4 @@
-# Sprint 1 - Tasks achieved
+# Sprint 1
 
 ## Project - Overview
 
