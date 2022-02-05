@@ -40,3 +40,19 @@ func InsertStudent(email string, password string) {
 
 	db.Create(&user)
 }
+
+func GetUsers() []string {
+	var users []Users
+
+	var userList []string
+
+	db := InitializeDatabase()
+
+	db.Select("Email").Find(&users)
+
+	for _, v := range users {
+		userList = append(userList, v.Email)
+	}
+
+	return userList
+}

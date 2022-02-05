@@ -41,3 +41,8 @@ func signIn(ctx *gin.Context) {
 	}
 	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "Sign in failed."})
 }
+
+func getUsers(ctx *gin.Context) {
+	usersList := database.GetUsers()
+	ctx.JSON(http.StatusOK, usersList)
+}
