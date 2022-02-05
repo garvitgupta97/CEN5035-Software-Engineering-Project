@@ -2,7 +2,7 @@
 
 ## Project - Overview
 
-The idea is to provide a web-application to lease out the apartments where customers can find a suitable room to sign a lease and manage their lease.
+A social media platform for students to collaborate and help each other by sharing job openings, informative articles and interview experiences. The application allows students and job seekers to maintain a list of the their job applications privately. Using the list users can easily track the post and companies they have applied to and share it with other users present in their network if they want. Users can also share other types of posts like articles or interview experiences. These post will be seggregated based on different job positions and companies, that will allow users to apply various filters so that they can find the exact type of content they are looking for.
 
 ## Useful links of the project
 - [Student Universe Repo Link](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/)
