@@ -11,7 +11,6 @@ const Home = () => {
         <React.Fragment>
             <MenuBar/>
             <Header />            
-            
             <Pricing />
          
          

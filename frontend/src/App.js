@@ -10,7 +10,7 @@ import SignUp from "./signup/signup";
 import Layout from './layout/layout'
 import Home from './Home/Home'
 import AboutUs from './AboutUs/AboutUs'
-import ContactUs from './ContactUs/ContactUs'
+import Account from './Account/Account'
 
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route path={'/AboutUs'} component={AboutUs}></Route>
-            <Route path={'/ContactUs'} component={ContactUs}></Route>
+            <Route path={'/Account'} component={Account}></Route>
             <Route path={'/home'} component={Home}></Route>
           </Switch>
     
