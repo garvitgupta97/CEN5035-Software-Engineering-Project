@@ -32,13 +32,34 @@ The idea is to provide a web-application to lease out the apartments where custo
 - Created API'S for fetching all user's emails
 
 ## Api documentation of backend services
-<details>
-  <summary>User API</summary>
-  ### Post
-   ### Api for user sign up
-  - [http://localhost:8080/api/signup/ ](http://localhost:8080/api/signup/)
-   ### Api for user sign in
-  - [http://localhost:8080/api/signin/](http://localhost:8080/api/signin/)
-   ### Api to fetch all the user's emails
-  - [http://localhost:8080/getUsers/](http://localhost:8080/getUsers/)
-</details>
+### Api for user sign up
+
+- [http://localhost:8080/api/signup/ ](http://localhost:8080/api/signup/)
+
+### Fail Case
+
+  ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/5f935876f1f276d8eea001294df14f5c4760e650/Resources/signin_fail.png)
+  
+### Success Case
+
+  ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/5f935876f1f276d8eea001294df14f5c4760e650/Resources/signup_successful.png)
+  
+  
+### Api for user sign in
+
+- [http://localhost:8080/api/signin/](http://localhost:8080/api/signin/)
+
+### Fail Case
+
+  ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/signin_fail.png)
+  
+### Success Case
+
+  ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/signin_successful.png)
+
+
+### Api to fetch all the user's emails
+
+- [http://localhost:8080/getUsers/](http://localhost:8080/getUsers/)
+
+![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/getUsers.png)
