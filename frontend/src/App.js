@@ -7,11 +7,16 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./login/login";
 import SignUp from "./signup/signup";
 
+import Layout from './layout/layout'
+import Home from './Home/Home'
+import AboutUs from './AboutUs/AboutUs'
+import ContactUs from './ContactUs/ContactUs'
+
 
 function App() {
   return (<Router>
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      {/* <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
           <Link className="navbar-brand" to={"/sign-in"}>Student Universe</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -25,18 +30,22 @@ function App() {
             </ul>
           </div>
         </div>
-      </nav>
+      </nav> */}
 
-      <div className="outer">
-        <div className="inner">
+
           <Switch>
             <Route exact path='/' component={Login} />
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
+            <Route path={'/AboutUs'} component={AboutUs}></Route>
+            <Route path={'/ContactUs'} component={ContactUs}></Route>
+            <Route path={'/home'} component={Home}></Route>
           </Switch>
-        </div>
-      </div>
-    </div></Router>
+    
+    </div>
+
+
+ </Router>
   );
 }
 

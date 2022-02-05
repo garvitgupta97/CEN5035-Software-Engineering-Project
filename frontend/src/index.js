@@ -4,12 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import Home from "./Home/Home";
+
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    
+    <Switch>
+        <App />
+        <Route path="/home" component={Home} />
+      </Switch>
     </BrowserRouter>,
   document.getElementById('root')
 );

@@ -1,8 +1,27 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default class SignUp extends React.Component {
     render() {
         return (
+            <React.Fragment>
+            <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+                <div className="container">
+                <Link className="navbar-brand" to={"/sign-in"}>Student Universe</Link>
+                <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <ul className="navbar-nav ml-auto">
+                    <li className="nav-item">
+                        <Link className="nav-link" to={"/sign-in"}>Sign in</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
+                    </li>
+                    </ul>
+                </div>
+                </div>
+            </nav> 
+            <div className="outer"> 
+            <div className="inner"> 
             <form>
                 <h3>Register</h3>
 
@@ -31,6 +50,9 @@ export default class SignUp extends React.Component {
                     Already registered <a href="#">log in?</a>
                 </p>
             </form>
+            </div>
+            </div>
+            </React.Fragment>
         );
     }
 }
