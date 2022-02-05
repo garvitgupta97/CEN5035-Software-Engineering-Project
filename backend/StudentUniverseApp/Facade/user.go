@@ -2,6 +2,9 @@ package server
 
 import (
 	store "StudentUniverse/StudentUniverseApp/Facade/DTO"
+
+	database "StudentUniverse/StudentUniverseApp/Facade/Database"
+
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +21,7 @@ func signUp(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"err": err.Error()})
 		return
 	}
+	database.InsertStudent(user.Email, user.Password)
 	store.Users = append(store.Users, user)
 
 	ctx.JSON(http.StatusOK, gin.H{
