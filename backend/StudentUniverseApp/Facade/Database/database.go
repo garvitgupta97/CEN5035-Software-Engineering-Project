@@ -30,7 +30,7 @@ func InitializeDatabase() *gorm.DB {
 	return db
 }
 
-func InsertStudent(email string, password string) {
+func InsertUser(email string, password string) {
 	db := InitializeDatabase()
 	defer db.Close()
 
@@ -55,4 +55,22 @@ func GetUsers() []string {
 	}
 
 	return userList
+}
+
+type Result struct {
+	Id    int
+	Email string
+}
+
+func GetUsersTest() []Result {
+	var res []Result
+
+	//var userList []string
+
+	db := InitializeDatabase()
+	//db.Raw("SELECT id, Email, Password FROM users").Scan(&users)
+
+	db.Table("Users").Select("Id, Email").Find(&res)
+
+	return res
 }
