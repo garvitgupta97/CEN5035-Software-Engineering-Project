@@ -99,19 +99,19 @@ func GetMD5Hash(text string) string {
 	return hex.EncodeToString(hash[:])
 }
 
-func getUsersTest(ctx *gin.Context) {
-	usersList := database.GetUsersTest()
-	fmt.Println("User list begins")
-	fmt.Println("--------------------------------------------")
+// func getUsersTest(ctx *gin.Context) {
+// 	usersList := database.GetUsersTest()
+// 	fmt.Println("User list begins")
+// 	fmt.Println("--------------------------------------------")
 
-	for _, s := range usersList {
+// 	for _, s := range usersList {
 
-		fmt.Println("ID: ", s.Id)
-		fmt.Println("Email: ", s.Email)
-		//fmt.Println("Pass: ", s.Password)
-		//fmt.Println("EncPass: ", GetMD5Hash(s.Password))
-		fmt.Println("--------------------------------------------")
+// 		fmt.Println("ID: ", s.Id)
+// 		fmt.Println("Email: ", s.Email)
+// 		//fmt.Println("Pass: ", s.Password)
 
-	}
-	ctx.JSON(http.StatusOK, "See Terminal")
-}
+// 		fmt.Println("--------------------------------------------")
+
+// 	}
+// 	ctx.JSON(http.StatusOK, "See Terminal")
+// }

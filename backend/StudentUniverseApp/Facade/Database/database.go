@@ -41,36 +41,31 @@ func InsertUser(email string, password string) {
 	db.Create(&user)
 }
 
-func GetUsers() []string {
-	var users []Users
+// func GetUsers() []string {
+// 	var users []Users
 
-	var userList []string
+// 	var userList []string
 
-	db := InitializeDatabase()
+// 	db := InitializeDatabase()
 
-	db.Select("Email").Find(&users)
+// 	db.Select("Email").Find(&users)
 
-	for _, v := range users {
-		userList = append(userList, v.Email)
-	}
+// 	for _, v := range users {
+// 		userList = append(userList, v.Email)
+// 	}
 
-	return userList
-}
+// 	return userList
+// }
 
-type Result struct {
-	Id    int
-	Email string
-}
-
-func GetUsersTest() []Result {
-	var res []Result
+func GetUsers() []Users {
+	var userList []Users
 
 	//var userList []string
 
 	db := InitializeDatabase()
 	//db.Raw("SELECT id, Email, Password FROM users").Scan(&users)
 
-	db.Table("Users").Select("Id, Email").Find(&res)
+	db.Table("Users").Select("Id, Email").Find(&userList)
 
-	return res
+	return userList
 }
