@@ -17,11 +17,7 @@ import (
 
 func signUp(ctx *gin.Context) {
 	user := new(store.User)
-	for _, u := range store.Users {
-		if u.Email == user.Email {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
-		}
-	}
+
 	if err := ctx.Bind(user); err != nil {
 
 		var verr validator.ValidationErrors
@@ -35,13 +31,21 @@ func signUp(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Signup Fail": err.Error()})
 		return
 	}
+	for _, u := range database.GetUsers() {
+		if u == user.Email {
+
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
+			return
+		}
+	}
+
 	database.InsertStudent(user.Email, user.Password)
 	store.Users = append(store.Users, user)
-
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "Signed up successfully.",
 		"jwt": "123456789",
 	})
+
 }
 
 func Simple(verr validator.ValidationErrors) map[string]string {

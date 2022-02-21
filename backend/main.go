@@ -1,6 +1,6 @@
 package main
 
-import "StudentUniverse/StudentUniverseApp/Facade"
+import server "StudentUniverse/StudentUniverseApp/Facade"
 
 func main() {
 	server.Start()
