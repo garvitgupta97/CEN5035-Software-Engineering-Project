@@ -4,10 +4,9 @@ go 1.17
 
 require github.com/gin-gonic/gin v1.7.7
 
-require (
-	github.com/mattn/go-sqlite3 v1.14.9
-	gorm.io/driver/sqlite v1.2.6
-)
+require github.com/mattn/go-sqlite3 v1.14.9
+
+require gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -31,5 +30,4 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gorm.io/gorm v1.22.3 // indirect
 )

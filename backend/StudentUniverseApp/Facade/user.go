@@ -13,6 +13,9 @@ import (
 	"github.com/go-playground/validator"
 
 	log "github.com/rs/zerolog/log"
+
+	"crypto/md5"
+	"encoding/hex"
 )
 
 func signUp(ctx *gin.Context) {
@@ -94,3 +97,25 @@ func getUsers(ctx *gin.Context) {
 	usersList := database.GetUsers()
 	ctx.JSON(http.StatusOK, usersList)
 }
+
+func GetMD5Hash(text string) string {
+	hash := md5.Sum([]byte(text))
+	return hex.EncodeToString(hash[:])
+}
+
+// func getUsersTest(ctx *gin.Context) {
+// 	usersList := database.GetUsersTest()
+// 	fmt.Println("User list begins")
+// 	fmt.Println("--------------------------------------------")
+
+// 	for _, s := range usersList {
+
+// 		fmt.Println("ID: ", s.Id)
+// 		fmt.Println("Email: ", s.Email)
+// 		//fmt.Println("Pass: ", s.Password)
+
+// 		fmt.Println("--------------------------------------------")
+
+// 	}
+// 	ctx.JSON(http.StatusOK, "See Terminal")
+// }
