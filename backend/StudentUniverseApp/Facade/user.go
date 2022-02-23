@@ -11,8 +11,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"
-
 	log "github.com/rs/zerolog/log"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func signUp(ctx *gin.Context) {
@@ -26,7 +26,7 @@ func signUp(ctx *gin.Context) {
 
 		var verr validator.ValidationErrors
 		if errors.As(err, &verr) {
-			ctx.JSON(http.StatusBadRequest, gin.H{"errors": Simple(verr)})
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
 			return
 		}
 
@@ -35,7 +35,12 @@ func signUp(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Signup Fail": err.Error()})
 		return
 	}
-	database.InsertStudent(user.Email, user.Password)
+	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Signup Fail": err.Error()})
+		return
+	}
+	database.InsertUser(user.Email, string(encryptedPassword))
 	store.Users = append(store.Users, user)
 
 	ctx.JSON(http.StatusOK, gin.H{
@@ -44,7 +49,7 @@ func signUp(ctx *gin.Context) {
 	})
 }
 
-func Simple(verr validator.ValidationErrors) map[string]string {
+func SimpleErrorMsg(verr validator.ValidationErrors) map[string]string {
 	errs := make(map[string]string)
 
 	for _, f := range verr {
@@ -64,7 +69,7 @@ func signIn(ctx *gin.Context) {
 
 		var verr validator.ValidationErrors
 		if errors.As(err, &verr) {
-			ctx.JSON(http.StatusBadRequest, gin.H{"errors": Simple(verr)})
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
 			return
 		}
 
@@ -74,16 +79,20 @@ func signIn(ctx *gin.Context) {
 		return
 
 	}
+
 	for _, u := range store.Users {
-		if u.Email == user.Email && u.Password == user.Password {
-			ctx.JSON(http.StatusOK, gin.H{
-				"msg": "Signed in successfully.",
-				"jwt": "123456789",
-			})
-			return
+		if u.Email == user.Email {
+			bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+			if u.Password == string(user.Password) {
+				ctx.JSON(http.StatusOK, gin.H{
+					"msg": "Signed in successfully.",
+					"jwt": "123456789",
+				})
+				return
+			}
 		}
 	}
-	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"Sign in failed": "Sign in failed."})
+	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"Sign in failed": "User not found"})
 }
 
 func getUsers(ctx *gin.Context) {

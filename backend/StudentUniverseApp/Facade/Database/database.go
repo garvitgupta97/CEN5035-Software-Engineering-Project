@@ -30,7 +30,7 @@ func InitializeDatabase() *gorm.DB {
 	return db
 }
 
-func InsertStudent(email string, password string) {
+func InsertUser(email string, password string) {
 	db := InitializeDatabase()
 	defer db.Close()
 
@@ -48,10 +48,10 @@ func GetUsers() []string {
 
 	db := InitializeDatabase()
 
-	db.Select("Email").Find(&users)
+	db.Select("Email, Password").Find(&users)
 
 	for _, v := range users {
-		userList = append(userList, v.Email)
+		userList = append(userList, v.Email, v.Password)
 	}
 
 	return userList
