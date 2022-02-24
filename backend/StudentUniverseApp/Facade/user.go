@@ -99,3 +99,8 @@ func getUsers(ctx *gin.Context) {
 	usersList := database.GetUsers()
 	ctx.JSON(http.StatusOK, usersList)
 }
+
+func getProfiles(ctx *gin.Context) {
+	usersList := database.GetProfiles()
+	ctx.JSON(http.StatusOK, usersList)
+}
