@@ -34,15 +34,15 @@ func signUp(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Signup Fail": err.Error()})
 		return
 	}
-	for _, u := range database.GetUsers() {
-		if u == user.Email {
+	// for _, u := range database.GetUsers() {
+	// 	if u == user.Email {
 
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
-			return
-		}
-	}
+	// 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
+	// 		return
+	// 	}
+	// }
 
-	database.InsertStudent(user.Email, user.Password)
+	// database.InsertStudent(user.Email, user.Password)
 	store.Users = append(store.Users, user)
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "Signed up successfully.",

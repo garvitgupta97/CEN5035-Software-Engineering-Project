@@ -6,7 +6,10 @@ require github.com/gin-gonic/gin v1.7.7
 
 require github.com/mattn/go-sqlite3 v1.14.9
 
-require gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
+require (
+	github.com/gin-contrib/cors v1.3.1 // indirect
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
