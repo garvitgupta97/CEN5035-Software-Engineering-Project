@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -52,65 +53,90 @@ func InitializeDatabase() *gorm.DB {
 	return db
 }
 
-func InsertUser(email string, password string) {
+func IsVerifiedUser(email string, password string) bool {
 	db := InitializeDatabase()
 	defer db.Close()
-
 	user := new(Users)
-	user.Email = email
-	user.Password = password
-
-	db.Create(&user)
+	return db.Model(&user).Where("Email = ? AND Password = ?", email, password).First(&user).RowsAffected != 0
 }
 
-func GetUsers() []string {
-	var users []Users
-
-	var userList []string
-
-	db := InitializeDatabase()
-
-	db.Select("Email, Password").Find(&users)
-
-	for _, v := range users {
-		userList = append(userList, v.Email, v.Password)
-	}
-
-	return userList
-}
-
-func InsertProfileData(profileId int, email string, name string, university string, profilePicture string, gender uint, birthDate time.Time, city string, state string, country string, bio string, createdAt time.Time, updatedAt time.Time) {
-
+func InsertUser(email string, password string) bool {
 	db := InitializeDatabase()
 	defer db.Close()
-	profile := new(Profiles)
-	profile.ProfileId = profileId
-	profile.Name = name
-	profile.Email = email
-	profile.University = university
-	profile.ProfilePicture = profilePicture
-	profile.Gender = gender
-	profile.BirthDate = birthDate
-	profile.City = city
-	profile.State = state
-	profile.Country = country
-	profile.Bio = bio
-	profile.CreatedAt = createdAt
-	profile.UpdatedAt = updatedAt
+	if !isExistingUser(email) {
+		user := new(Users)
+		user.Email = email
+		user.Password = password
+		db.Create(&user)
+		return true
+	}
+	return false
+}
+
+func GetUsers() []Users {
+	var users []Users
+	db := InitializeDatabase()
+	defer db.Close()
+	db.Select("Id, Email").Find(&users)
+	return users
+}
+
+func isExistingUser(email string) bool {
+	user := new(Users)
+	db := InitializeDatabase()
+	defer db.Close()
+	return db.Model(&user).Where("Email = ?", email).First(&user).RowsAffected != 0
+}
+
+//func InsertProfileData(profileId int, email string, name string, university string,
+//profilePicture string, gender uint, birthDate time.Time, city string, state string, country string,
+//bio string, createdAt time.Time, updatedAt time.Time) bool {
+func UpsertProfile(profile *Profiles) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	// profileTemp := new(Profiles)
+	// profileTemp.ProfileId = profileId
+	// profileTemp.Name = name
+	// profileTemp.Email = email
+	// profileTemp.University = university
+	// profileTemp.ProfilePicture = profilePicture
+	// profileTemp.Gender = gender
+	// profileTemp.BirthDate = birthDate
+	// profileTemp.City = city
+	// profileTemp.State = state
+	// profileTemp.Country = country
+	// profileTemp.Bio = bio
+	// profileTemp.CreatedAt = createdAt
+	// profileTemp.UpdatedAt = updatedAt
 
 	// db.Clauses(clause.OnConflict{
 	// 	Columns:   []clause.Column{{Name: "Email"}},                                                                                                                                                     // key colume
 	// 	DoUpdates: clause.AssignmentColumns([]string{"ProfileId", "Email", "Name", "University", "ProfilePicture", "Gender", "BirthDate", "City", "State", "Country", "Bio", "CreatedAt", "UpdatedAt"}), // column needed to be updated
 	// }).Create(&profile)
-
-	if db.Model(&profile).Where("Email = ?", email).Updates(&profile).RowsAffected == 0 {
-		db.Create(&profile)
+	fmt.Println("Update", db.Model(&profile).Where("Email = ?", profile.Email).Updates(&profile).RowsAffected == 0)
+	if db.Model(&profile).Where("Email = ?", profile.Email).Updates(&profile).RowsAffected == 0 {
+		fmt.Println("Exist", isExistingUser(profile.Email))
+		if isExistingUser(profile.Email) {
+			return db.Create(&profile).Error == nil
+		}
+		return false
 	}
+	return true
 }
 
 func GetProfiles() []Profiles {
 	var profiles []Profiles
 	db := InitializeDatabase()
+	defer db.Close()
 	db.Find(&profiles)
 	return profiles
+}
+
+func TestQuery(query string, email string, password string) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	var user []Users
+	ans := db.Raw(query, email, password).First(&user).RowsAffected != 0
+
+	return ans
 }
