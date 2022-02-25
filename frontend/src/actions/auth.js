@@ -15,12 +15,12 @@ export const logout = () => ({ type: 'LOGOUT' });
 export const startLogin = (username, password) => async (dispatch) => {
   try {
     dispatch({ type: 'LOGIN_REQUEST' });
-    const response = await axios.post('/users/login', {
-      username,
-      password,
+    const response = await axios.post('/api/signin', {
+      "Email":username,
+      "Password":password,
     });
-    const { user, token } = response.data;
-    dispatch(login(user, token));
+    const { token, _ } = response.data;
+    dispatch(login(username, "123"));
     dispatch({ type: 'LOGIN_SUCCESS' });
   } catch (e) {
     dispatch({
@@ -34,7 +34,7 @@ export const startLogin = (username, password) => async (dispatch) => {
 export const startLogout = () => async (dispatch, getState) => {
   try {
     dispatch({ type: 'LOGOUT_REQUEST' });
-    await axios.post('/users/logout');
+    // await axios.post('/users/logout');
     dispatch(logout());
     dispatch(editPost(1, { has_voted: null }));
     dispatch(
@@ -70,8 +70,8 @@ export const startRegister = (username, password) => async (dispatch) => {
       "Email":username,
       "Password":password
     });
-    const { user, token } = response.data;
-    dispatch(login(user, token));
+    const { token , _ } = response.data;
+    dispatch(login(username, "123"));
     dispatch({ type: 'REGISTER_SUCCESS' });
   } catch (e) {
     dispatch({
