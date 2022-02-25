@@ -2,8 +2,9 @@ import axios from 'axios';
 import store from './store/configureStore';
 import { tokenSelector } from './selectors';
 
+
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
+  baseURL: "http://localhost:8082",
 });
 
 instance.interceptors.request.use((config) => {

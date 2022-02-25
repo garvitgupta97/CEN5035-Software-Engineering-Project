@@ -66,9 +66,9 @@ export const startLogout = () => async (dispatch, getState) => {
 export const startRegister = (username, password) => async (dispatch) => {
   try {
     dispatch({ type: 'REGISTER_REQUEST' });
-    const response = await axios.post('/users', {
-      username,
-      password,
+    const response = await axios.post('/api/signup', {
+      "Email":username,
+      "Password":password
     });
     const { user, token } = response.data;
     dispatch(login(user, token));
