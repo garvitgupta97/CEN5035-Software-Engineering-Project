@@ -5,5 +5,11 @@ type User struct {
 	Email    string `binding:"required,min=5,max=30,email"`
 	Password string `binding:"required,min=7,max=32"`
 }
+type Post struct {
+	Title   string `binding:"required,min=10,max=30"`
+	Content string `binding:"required,min=10,max=100"`
+	UserId  int    `json:"-"`
+}
 
 var Users []*User
+var Posts []*Post

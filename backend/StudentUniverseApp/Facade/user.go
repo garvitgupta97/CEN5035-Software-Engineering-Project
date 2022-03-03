@@ -11,18 +11,21 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"
-
 	log "github.com/rs/zerolog/log"
 )
 
 func signUp(ctx *gin.Context) {
 	user := new(store.User)
-
+	// for _, u := range store.Users {
+	// 	if u.Email == user.Email {
+	// 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
+	// 	}
+	// }
 	if err := ctx.Bind(user); err != nil {
 
 		var verr validator.ValidationErrors
 		if errors.As(err, &verr) {
-			ctx.JSON(http.StatusBadRequest, gin.H{"errors": Simple(verr)})
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
 			return
 		}
 
@@ -31,16 +34,17 @@ func signUp(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Signup Fail": err.Error()})
 		return
 	}
-	for _, u := range database.GetUsers() {
-		if u == user.Email {
+	// encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	// if err != nil {
+	// 	ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Signup Fail": err.Error()})
+	// 	return
+	// }
 
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
-			return
-		}
+	if !database.InsertUser(user.Email, user.Password) {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Signup Fail": "User Already Exists"})
+		return
 	}
 
-	database.InsertStudent(user.Email, user.Password)
-	store.Users = append(store.Users, user)
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "Signed up successfully.",
 		"jwt": "123456789",
@@ -48,7 +52,7 @@ func signUp(ctx *gin.Context) {
 
 }
 
-func Simple(verr validator.ValidationErrors) map[string]string {
+func SimpleErrorMsg(verr validator.ValidationErrors) map[string]string {
 	errs := make(map[string]string)
 
 	for _, f := range verr {
@@ -63,34 +67,113 @@ func Simple(verr validator.ValidationErrors) map[string]string {
 }
 
 func signIn(ctx *gin.Context) {
-	user := new(store.User)
+	user := new(database.Users)
 	if err := ctx.Bind(user); err != nil {
-
 		var verr validator.ValidationErrors
 		if errors.As(err, &verr) {
-			ctx.JSON(http.StatusBadRequest, gin.H{"errors": Simple(verr)})
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
 			return
 		}
-
 		log.Info().Err(err).Msg("unable to bind")
-
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Sign in failed": err.Error()})
 		return
+	}
+	//encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	// if err != nil {
+	// 	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"Sign in failure": err.Error()})
+	// }
+	isVerifiedUser := database.IsVerifiedUser(user.Email, user.Password) //string(encryptedPassword))
 
+	if isVerifiedUser {
+		ctx.JSON(http.StatusOK, gin.H{
+			"msg": "Signed in successfully.",
+			"jwt": "123456789",
+		})
+		return
 	}
-	for _, u := range store.Users {
-		if u.Email == user.Email && u.Password == user.Password {
-			ctx.JSON(http.StatusOK, gin.H{
-				"msg": "Signed in successfully.",
-				"jwt": "123456789",
-			})
-			return
-		}
-	}
-	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"Sign in failed": "Sign in failed."})
+	ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"Sign in failed": "User not found"})
 }
 
 func getUsers(ctx *gin.Context) {
 	usersList := database.GetUsers()
 	ctx.JSON(http.StatusOK, usersList)
 }
+
+func getProfiles(ctx *gin.Context) {
+	usersList := database.GetProfiles()
+	ctx.JSON(http.StatusOK, usersList)
+}
+
+func getPosts(ctx *gin.Context) {
+	posts := database.GetPosts()
+	ctx.JSON(http.StatusOK, posts)
+}
+
+func updateProfile(ctx *gin.Context) {
+	profile := new(database.Profiles)
+	if err := ctx.Bind(profile); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"Errors": "Input error"})
+	}
+	isProfileUpdated := database.UpsertProfile(profile)
+	fmt.Println("Final Ans: ", isProfileUpdated)
+	if isProfileUpdated {
+		ctx.JSON(http.StatusOK, gin.H{
+			"msg": "Profile updated successfully.",
+		})
+		return
+	}
+	ctx.JSON(http.StatusBadRequest, gin.H{
+		"Error": "Profile updatation failed",
+	})
+
+}
+
+func createPost(ctx *gin.Context) {
+	post := new(store.Post)
+	if err := ctx.Bind(post); err != nil {
+
+		var verr validator.ValidationErrors
+		if errors.As(err, &verr) {
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
+			return
+		}
+
+		log.Info().Err(err).Msg("unable to bind")
+
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{" Can't create post": err.Error()})
+		return
+	}
+	fmt.Print(post.UserId)
+	if !database.AddPost(post.Title, post.Content, post.UserId) {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Cannot create post": "Sign up to create posts"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"msg": "Post Created successfully.",
+		"jwt": "123456789",
+	})
+}
+
+// func signUp2(ctx *gin.Context) {
+// 	user := new(store.User)
+// 	err := ctx.Bind(user)
+// 	// if err := ctx.Bind(user); err != nil {
+
+// 	// 	var verr validator.ValidationErrors
+// 	// 	if errors.As(err, &verr) {
+// 	// 		ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
+// 	// 		return
+// 	// 	}
+
+// 	// 	log.Info().Err(err).Msg("unable to bind")
+
+// 	// 	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Signup Fail": err.Error()})
+// 	// 	return
+// 	// }
+
+// 	fmt.Println(err)
+// 	fmt.Println("User " + user.Email + "Pass: " + user.Password)
+// 	ctx.JSON(http.StatusOK, gin.H{
+// 		"msg": "Signed up successfully.",
+// 	})
+// }
