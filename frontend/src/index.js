@@ -1,32 +1,29 @@
-import React from 'react';
+import { Provider } from 'react-redux';
+import { ColorModeScript } from '@chakra-ui/react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-import Home from "./Home/Home";
-
-import { BrowserRouter } from "react-router-dom";
-import * as serviceWorker from "./serviceWorker";
-
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import * as serviceWorker from './serviceWorker';
+import theme from './theme';
+import store from './store/configureStore';
 
 ReactDOM.render(
-  <BrowserRouter>
-    
-    <Switch>
-        <App />
-        <Route path="/home" component={Home} />
-      </Switch>
-    </BrowserRouter>,
+  <StrictMode>
+    <Provider store={store}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <App />
+    </Provider>
+  </StrictMode>,
   document.getElementById('root')
 );
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://cra.link/PWA
+serviceWorker.unregister();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-serviceWorker.unregister();
-
-
-
-
+reportWebVitals();
