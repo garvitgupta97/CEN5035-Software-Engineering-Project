@@ -22,11 +22,26 @@ it('Launching', () => {
     });
 
 
-    cy.get('input[id="username-input"]')
+     cy.get('input[id="username-input"]')
     .clear()
     .type('testuser@gmail.com');
     
     cy.get('input[id="password-input"]')
     .clear()
     .type('testuser');
-}
+
+
+    cy.findByRole('button', { name: /Login/i }).click();
+
+    cy.get('#menu-button-10').click();
+
+    cy.contains('button', 'Logout').click();
+
+
+    // cy.findByRole('button', { name: /Login/i }).click();
+
+    cy.contains('StUni')
+      .should('be.visible')
+    cy.contains('Home')
+      .should('be.visible')
+  })
