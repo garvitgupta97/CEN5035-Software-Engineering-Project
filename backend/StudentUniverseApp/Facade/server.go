@@ -1,7 +1,7 @@
 package server
 
 func Start() {
-	router := setRouter()
+	router := SetRouter()
 
-	router.Run(":8082")
+	router.Run(":8080")
 }
