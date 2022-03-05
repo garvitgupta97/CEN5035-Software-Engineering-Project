@@ -10,9 +10,10 @@ A social media platform for students to collaborate and help each other by shari
 - [All user stories link](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/issues)
 
 ## Frontend Tasks achieved - (React js)
-- Initialized the frontend and backend code
-- Included the front end pages for Sign up and Sign in
-- Added the frontend boilerplate landing page.
+- Wrote test cases using Cypress
+- Integrated Backend with Frontend
+- Revamped the whole frontend
+- Added homepage which will show user's posts
 
 ## Backend Tasks achieved - (Go)
 - Connected the Database with to perform Authentication
