@@ -44,8 +44,8 @@ const Comment = ({
       p={4}
       borderRadius="md"
       width="100%"
-      light="gray.50"
-      dark="gray.700"
+      light="gray.60"
+      dark="gray.750"
     >
       <Flex>
         <UpvoteBar
