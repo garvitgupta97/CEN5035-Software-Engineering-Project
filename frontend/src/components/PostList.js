@@ -55,7 +55,7 @@ const PostList = ({ isLoading, error, postList, getPostList }) => {
             <Box key={`${PostId}-${Title}`} my={4}>
               <Post
                 id={PostId}
-                type={type}
+                type={'text'}
                 subreddit={subreddit_name}
                 author={author_name}
                 createdAt={created_at}
@@ -63,7 +63,7 @@ const PostList = ({ isLoading, error, postList, getPostList }) => {
                 body={Content}
                 numComments={CommentsCount}
                 numVotes={Votes}
-                hasVoted={has_voted}
+                hasVoted={0}
               />
             </Box>
           )
