@@ -99,7 +99,7 @@ const Post = ({
             fontWeight="bold"
           >
             <Box
-              as={Link}
+              // as={Link}
               // to={`/r/${subreddit}/comments/${id}`}
               p={2}
               borderRadius="sm"

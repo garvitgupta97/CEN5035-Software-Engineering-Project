@@ -16,10 +16,8 @@ import {
   AlertIcon,
 } from '@chakra-ui/react';
 import {
-  createLoadingAndErrorSelector,
-  subredditsSelector,
+  createLoadingAndErrorSelector
 } from '../selectors';
-import { getSubreddits } from '../actions/subreddits';
 import { submitPost } from '../actions/post';
 
 class CreatePostPage extends React.Component {
@@ -30,15 +28,14 @@ class CreatePostPage extends React.Component {
       postType: 'text',
       title: '',
       body: '',
-      url: '',
-      subreddit: '',
+      url: ''
     };
   }
 
-  componentDidMount() {
-    const { getSubreddits } = this.props;
-    getSubreddits();
-  }
+  // componentDidMount() {
+  //   const { getSubreddits } = this.props;
+  //   getSubreddits();
+  // }
 
   handleSubmit = async (e) => {
     try {
@@ -158,12 +155,11 @@ const mapStateToProps = (state) => ({
   srIsLoading: srLoadingSelector(state),
   srError: srErrorSelector(state),
   submitIsLoading: submitLoadingSelector(state),
-  submitError: submitErrorSelector(state),
-  subreddits: subredditsSelector(state),
+  submitError: submitErrorSelector(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getSubreddits: () => dispatch(getSubreddits()),
+  // getSubreddits: () => dispatch(getSubreddits()),
   submitPost: (postDetails) => dispatch(submitPost(postDetails)),
 });
 
