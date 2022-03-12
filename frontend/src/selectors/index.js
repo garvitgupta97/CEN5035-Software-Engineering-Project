@@ -22,7 +22,7 @@ export const createErrorSelector = (requestNames) => (state) => {
 
 export const createLoadingAndErrorSelector = (
   requestNames,
-  defaultLoading = true
+  defaultLoading = false
 ) => {
   const loadingSelector = createLoadingSelector(requestNames, defaultLoading);
   const errorSelector = createErrorSelector(requestNames);
