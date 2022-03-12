@@ -69,17 +69,6 @@ class CreatePostPage extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <Stack spacing={3}>
             <FormControl>
-              <RadioGroup
-                value={postType}
-                onChange={(postType) => this.setState({ postType })}
-              >
-                <Stack direction="row" spacing={3}>
-                  <Radio value="text">text post</Radio>
-                  <Radio value="link">link</Radio>
-                </Stack>
-              </RadioGroup>
-            </FormControl>
-            <FormControl>
               <Input
                 value={title}
                 onChange={(e) => this.setState({ title: e.target.value })}
