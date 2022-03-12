@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  Box,
-  Flex,
   Heading,
   Spacer,
   HStack,
@@ -11,11 +9,7 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
-  MenuDivider,
-  Alert,
-  AlertIcon,
-  CircularProgress,
+  MenuItem
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
@@ -48,10 +42,16 @@ const Navbar = ({
         ml={[2, 4]}
         display={user ? 'block' : ['none', 'block']}
         fontSize={['1.3rem', '2.25rem']}
+        mr={[2, 4]}
       >
         StUni
       </Heading>
+
       <HStack>
+        <Button display={['none', 'flex']} as={Link} to="/">
+          Home
+        </Button>
+
         {user && (
           <Button display={['none', 'flex']} as={Link} to="/submit">
             Submit
@@ -68,9 +68,6 @@ const Navbar = ({
           <MenuList>
             <MenuItem display={['block', 'none']} as={Link} to="/submit">
               Submit post
-            </MenuItem>
-            <MenuItem as={Link} to="/subreddits/create">
-              Create subreddit
             </MenuItem>
             <MenuItem
               onClick={async () => {
