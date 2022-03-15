@@ -45,12 +45,12 @@ class CreatePostPage extends React.Component {
         body: postType === 'text' ? body : url,
         subreddit,
       });
-      history.push(`/r/${subreddit}/comments/${id}`);
+      history.push(`/`);
     } catch (err) {}
   };
 
   render() {
-    const { postType, title, body, url } = this.state;
+    const {title, body} = this.state;
     const {
       srIsLoading,
       
@@ -79,24 +79,14 @@ class CreatePostPage extends React.Component {
               />
             </FormControl>
             <FormControl>
-              {postType === 'text' ? (
                 <Textarea
                   value={body}
                   onChange={(e) => this.setState({ body: e.target.value })}
                   variant="filled"
-                  placeholder="text (optional)"
+                  placeholder="text"
                   rows={10}
+                  isRequired
                 />
-              ) : (
-                <Input
-                  value={url}
-                  onChange={(e) => this.setState({ url: e.target.value })}
-                  type="url"
-                  variant="filled"
-                  placeholder="url"
-                  required
-                />
-              )}
             </FormControl>
             
             <Button
