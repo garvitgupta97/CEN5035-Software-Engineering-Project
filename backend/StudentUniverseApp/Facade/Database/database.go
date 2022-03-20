@@ -172,7 +172,6 @@ func GetPostById(postId uuid.UUID) Post {
 	return *post
 }
 
-
 func CreatePost(post Post) bool {
 	db := InitializeDatabase()
 	defer db.Close()
@@ -180,4 +179,12 @@ func CreatePost(post Post) bool {
 		return false
 	}
 	return true
+}
+
+func GetAllPosts() []Post {
+	var posts []Post
+	db := InitializeDatabase()
+	defer db.Close()
+	db.Find(&posts)
+	return posts
 }
