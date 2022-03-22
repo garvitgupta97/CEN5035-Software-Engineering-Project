@@ -1,9 +1,9 @@
 package database
 
 import (
+	"fmt"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -15,7 +15,7 @@ type Users struct {
 }
 
 type Profiles struct {
-	ProfileId      int       `gorm:"column:id; primary_key; AUTO_INCREMENT" form:"id" json:"id"`
+	ProfileId      int       `gorm:"AUTO_INCREMENT; PRIMARY_KEY; column:id;" form:"id" json:"id"`
 	Email          string    `gorm:"not null" form:"email" json:"email"`
 	Name           string    `gorm:"not null column:user_name;NOT NULL" form:"username" json:"username"`
 	University     string    `gorm:"not null column:university" form:"university" json:"university"`
@@ -31,27 +31,27 @@ type Profiles struct {
 }
 
 type Thread struct {
-	ThreadId    uuid.UUID `gorm:"column:thread_id; primary_key; AUTO_INCREMENT"`
-	Title       string    `column:"title"`
-	Description string    `column:"description"`
+	ThreadId    int    `gorm:"column:thread_id; primary_key; AUTO_INCREMENT"`
+	Title       string `column:"title"`
+	Description string `column:"description"`
 }
 
 type Post struct {
-	PostId        uuid.UUID `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
-	UserId        int       `gorm:"column:user_id"`
-	ThreadId      uuid.UUID `gorm:"column:thread_id"`
-	Title         string    `gorm:"column:title"`
-	Content       string    `gorm:"column:content"`
-	Votes         int       `gorm:"column:votes"`
-	CommentsCount int       `gorm:"column:comments_count"`
-	ThreadTitle   string    `gorm:"column:thread_title"`
+	PostId        int    `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
+	UserId        int    `gorm:"column:user_id"`
+	ThreadId      int    `gorm:"column:thread_id"`
+	Title         string `gorm:"column:title"`
+	Content       string `gorm:"column:content"`
+	Votes         int    `gorm:"column:votes"`
+	CommentsCount int    `gorm:"column:comments_count"`
+	ThreadTitle   string `gorm:"column:thread_title"`
 }
 
 type Comment struct {
-	CommentId uuid.UUID `gorm:"column:comment_id; primary_key; AUTO_INCREMENT"`
-	PostId    uuid.UUID `gorm:"column:post_id"`
-	Content   string    `gorm:"column:content"`
-	Votes     int       `gorm:"column:votes"`
+	CommentId int    `gorm:"column:comment_id; primary_key; AUTO_INCREMENT"`
+	PostId    int    `gorm:"column:post_id"`
+	Content   string `gorm:"column:content"`
+	Votes     int    `gorm:"column:votes"`
 }
 
 func InitializeDatabase() *gorm.DB {
@@ -71,6 +71,10 @@ func InitializeDatabase() *gorm.DB {
 	}
 	if !db.HasTable(&Profiles{}) {
 		db.CreateTable(&Profiles{})
+		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Profiles{})
+	}
+	if !db.HasTable(&Post{}) {
+		db.CreateTable(&Post{})
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Profiles{})
 	}
 
@@ -164,7 +168,7 @@ func TestQuery(query string, email string, password string) bool {
 	return ans
 }
 
-func GetPostById(postId uuid.UUID) Post {
+func GetPostById(postId int) Post {
 	post := new(Post)
 	db := InitializeDatabase()
 	defer db.Close()
@@ -175,10 +179,8 @@ func GetPostById(postId uuid.UUID) Post {
 func CreatePost(post Post) bool {
 	db := InitializeDatabase()
 	defer db.Close()
-	if err := db.Create(&post); err != nil {
-		return false
-	}
-	return true
+	fmt.Println(post)
+	return db.Create(&post).Error == nil
 }
 
 func GetAllPosts() []Post {
