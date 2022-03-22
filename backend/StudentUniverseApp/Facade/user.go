@@ -48,13 +48,11 @@ func signUp(ctx *gin.Context) {
 	// 		return
 	// 	}
 	// }
-
-	// database.InsertStudent(user.Email, user.Password)
-	// store.Users = append(store.Users, user)
-	// ctx.JSON(http.StatusOK, gin.H{
-	// 	"msg": "Signed up successfully.",
-	// 	"jwt": "123456789",
-	// })
+	//fmt.Println("Sign Up done")
+	ctx.JSON(http.StatusOK, gin.H{
+		"msg": "Signed up successfully.",
+		"jwt": "123456789",
+	})
 
 }
 

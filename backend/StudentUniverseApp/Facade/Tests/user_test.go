@@ -17,8 +17,8 @@ import (
 func Test_SignUp_NewUser(t *testing.T) {
 
 	testUsers := &database.Users{
-		Email:    "testing2@tester.com",
-		Password: "tester123",
+		Email:    "testemailMain323423@tester.com",
+		Password: "tester1234",
 	}
 	fmt.Print("New User Test - Unique user")
 	userformValue, _ := json.Marshal(testUsers)
@@ -72,7 +72,7 @@ func Test_SignIn_FormValidation(t *testing.T) {
 	req, _ := http.NewRequest(http.MethodPost, "/api/signin", bytes.NewBuffer(userformValue))
 	req.Header.Set("Content-Type", "application/json")
 	r.ServeHTTP(w, req)
-	assert.Equal(t, http.StatusUnauthorized, w.Code, "Test passed - Form validation")
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Test passed - Form validation")
 }
 
 func Test_SignIn_SinginSuccess(t *testing.T) {
