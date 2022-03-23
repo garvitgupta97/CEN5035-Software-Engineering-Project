@@ -65,7 +65,7 @@ type AllPosts struct {
 	CommentsCount   int
 	PostCreatedTime time.Time
 	ThreadTitle     string
-	Name            string
+	Email           string
 }
 
 func InitializeDatabase() *gorm.DB {
@@ -179,14 +179,12 @@ func CreatePost(post Post) bool {
 }
 
 func GetAllPosts() AllPosts {
-	var allPosts AllPosts
+	//var allPosts Post
+
+	allPosts := AllPosts{}
 	db := InitializeDatabase()
 	defer db.Close()
-	db.Model(&allPosts).Preload("Users").Find(&allPosts)
-	//db.Model(&Post{}).Select("posts.*, users.id").Joins("inner join users on posts.user_id = users.id").Find(&allPosts{})
-
-	//db.Joins("Users").Find(&allPosts)
-
-	// db.Find(&allPosts)
+	//db.Model(&allPosts).Preload("Users").Find(&allPosts)
+	db.Table("posts").Select("posts.*, users.email").Joins("inner join users on posts.user_id = users.id").Find(&allPosts)
 	return allPosts
 }
