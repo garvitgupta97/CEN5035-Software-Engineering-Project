@@ -33,7 +33,8 @@ func createPost(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
 		return
 	}
-	ctx.Status(http.StatusOK)
+	ctx.JSON(http.StatusOK, gin.H{
+		"msg": "Posted successfully"})
 }
 
 func getPostById(ctx *gin.Context) {
@@ -60,9 +61,5 @@ func getPostById(ctx *gin.Context) {
 
 func getAllPosts(ctx *gin.Context) {
 	postList := database.GetAllPosts()
-	if (postList.PostId) == 0 {
-		ctx.JSON(http.StatusBadRequest, gin.H{"Error": "Post not found"})
-		return
-	}
 	ctx.JSON(http.StatusOK, postList)
 }

@@ -177,10 +177,11 @@ func CreatePost(post Post) bool {
 	return db.Create(&post).Error == nil
 }
 
-func GetAllPosts() AllPosts {
+func GetAllPosts() []AllPosts {
 	//var allPosts Post
 
-	allPosts := AllPosts{}
+	//allPosts := AllPosts{}
+	var allPosts []AllPosts
 	db := InitializeDatabase()
 	defer db.Close()
 	//db.Model(&allPosts).Preload("Users").Find(&allPosts)
