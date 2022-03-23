@@ -173,15 +173,11 @@ func GetPostById(postId uuid.UUID) Post {
 }
 
 
-// func CreatePost(post Post) bool {
-// 	db := InitializeDatabase()
-// 	defer db.Close()
-// 	if !isExistingUser(email) {
-// 		user := new(Users)
-// 		user.Email = email
-// 		user.Password = password
-// 		db.Create(&user)
-// 		return true
-// 	}
-// 	return false
-// }
+func CreatePost(post Post) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	if err := db.Create(&post); err != nil {
+		return false
+	}
+	return true
+}

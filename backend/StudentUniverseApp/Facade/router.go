@@ -29,7 +29,7 @@ func SetRouter() *gin.Engine {
 		api.POST("/getProfiles", getProfiles)
 		//api.POST("/testQuery", testQuery)
 		//api.POST("/signUp2", signUp2)
-		//api.POST("/post/create", createPost)
+		api.POST("/post/create", createPost)
 		//api.DELETE("/post/{id}", deletePost)
 		//api.POST("/feedPosts", getFeedPosts)//get
 		//api.POST("/post/myPosts", getMyPosts)//get

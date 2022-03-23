@@ -13,32 +13,28 @@ import (
 	log "github.com/rs/zerolog/log"
 )
 
-// func createPost(ctx *gin.Context) {
-// 	post := new(database.Post)
-// 	// for _, u := range store.Users {
-// 	// 	if u.Email == user.Email {
-// 	// 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
-// 	// 	}
-// 	// }
-// 	if err := ctx.Bind(post); err != nil {
+func createPost(ctx *gin.Context) {
+	post := new(database.Post)
+	
+	if err := ctx.Bind(post); err != nil {
 
-// 		var verr validator.ValidationErrors
-// 		if errors.As(err, &verr) {
-// 			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
-// 			return
-// 		}
+		var verr validator.ValidationErrors
+		if errors.As(err, &verr) {
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
+			return
+		}
 
-// 		log.Info().Err(err).Msg("unable to bind")
+		log.Info().Err(err).Msg("unable to bind")
 
-// 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Post Fail": err.Error()})
-// 		return
-// 	}
-// 	if !database.CreatePost(post) {
-// 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
-// 		return
-// 	}
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Post Fail": err.Error()})
+		return
+	}
+	if !database.CreatePost(*post) {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
+		return
+	}
 
-// }
+}
 
 func getPostById(ctx *gin.Context) {
 	post := new(database.Post)
