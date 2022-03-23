@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -174,7 +173,7 @@ func GetPostById(postId int) Post {
 func CreatePost(post Post) bool {
 	db := InitializeDatabase()
 	defer db.Close()
-	fmt.Println(post)
+	//fmt.Println(post)
 	return db.Create(&post).Error == nil
 }
 
