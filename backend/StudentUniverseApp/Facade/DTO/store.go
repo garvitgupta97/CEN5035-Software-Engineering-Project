@@ -8,7 +8,7 @@ type User struct {
 type Post struct {
 	Title   string `binding:"required,min=10,max=30"`
 	Content string `binding:"required,min=10,max=100"`
-	UserId  int    `json:"-"`
+	Email   string `binding:"required,min=5,max=30,email"`
 }
 
 var Users []*User

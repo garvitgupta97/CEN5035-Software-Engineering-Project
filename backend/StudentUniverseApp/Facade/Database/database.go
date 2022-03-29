@@ -37,7 +37,7 @@ type Posts struct {
 	Content   string    `gorm:"not null column:university" form:"content" json:"content"`
 	CreatedAt time.Time `gorm:"not null column:created_at;default:CURRENT_TIMESTAMP" form:"created_at" json:"created_at"`
 	UpdatedAt time.Time `gorm:"not null column:updated_at;default:CURRENT_TIMESTAMP" form:"updated_at" json:"updated_at"`
-	UserId    int       `gorm:"not null column:UserId" form:"UserId" json:"UserId"`
+	Email     string    `gorm:"not null column:Email" form:"Email" json:"Email"`
 }
 
 func InitializeDatabase() *gorm.DB {
@@ -109,13 +109,13 @@ func isExistingUser(email string) bool {
 	return db.Model(&user).Where("Email = ?", email).First(&user).RowsAffected != 0
 }
 
-func isExistingUserId(userid int) bool {
+/*func isExistingUserId(userid int) bool {
 	user := new(Users)
 	db := InitializeDatabase()
 
 	defer db.Close()
 	return db.Model(&user).Where("Id = ?", userid).First(&user).RowsAffected != 0
-}
+}*/
 
 //func InsertProfileData(profileId int, email string, name string, university string,
 //profilePicture string, gender uint, birthDate time.Time, city string, state string, country string,
@@ -161,17 +161,17 @@ func GetProfiles() []Profiles {
 	return profiles
 }
 
-func AddPost(title string, content string, userid int) bool {
+func AddPost(title string, content string, email string) bool {
 	db := InitializeDatabase()
 	defer db.Close()
 
-	if isExistingUserId(userid) {
+	if isExistingUser(email) {
 		post := new(Posts)
 		post.Title = title
 		post.Content = content
-		post.UserId = userid
-
-		db.Model(&Users{}).Where("Id = ", userid).Update("UserPosts", post)
+		post.Email = email
+		db.Create(&post)
+		db.Model(&Users{}).Where("Email = ", email).Update("UserPosts", post)
 		return true
 	}
 	return false

@@ -45,6 +45,13 @@ func signUp(ctx *gin.Context) {
 		return
 	}
 
+	// 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
+	// 		return
+	// 	}
+	// }
+
+	// database.InsertStudent(user.Email, user.Password)
+	store.Users = append(store.Users, user)
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "Signed up successfully.",
 		"jwt": "123456789",
@@ -143,8 +150,8 @@ func createPost(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{" Can't create post": err.Error()})
 		return
 	}
-	fmt.Print(post.UserId)
-	if !database.AddPost(post.Title, post.Content, post.UserId) {
+
+	if !database.AddPost(post.Title, post.Content, post.Email) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Cannot create post": "Sign up to create posts"})
 		return
 	}
