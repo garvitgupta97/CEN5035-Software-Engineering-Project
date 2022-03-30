@@ -29,6 +29,16 @@ func SetRouter() *gin.Engine {
 		api.POST("/getProfiles", getProfiles)
 		//api.POST("/testQuery", testQuery)
 		//api.POST("/signUp2", signUp2)
+		//api.POST("/post/create", createPost)
+		//api.DELETE("/post/{id}", deletePost)
+		//api.POST("/feedPosts", getFeedPosts)//get
+		//api.POST("/post/myPosts", getMyPosts)//get
+		api.POST("/post/{id}", getPostById) // post
+		//api.POST("/comment/create", createComment)
+		//api.DELETE("/comment/{id}/", deleteComment)
+		//api.POST("/post/{id}/upvote", createComment)
+		//api.DELETE("/post/{id}/downvote", deleteComment)
+
 	}
 
 	router.NoRoute(func(ctx *gin.Context) { ctx.JSON(http.StatusNotFound, gin.H{}) })

@@ -1,7 +1,6 @@
 package server
 
 import (
-	store "StudentUniverse/StudentUniverseApp/Facade/DTO"
 	"errors"
 	"fmt"
 
@@ -15,7 +14,7 @@ import (
 )
 
 func signUp(ctx *gin.Context) {
-	user := new(store.User)
+	user := new(database.Users)
 	// for _, u := range store.Users {
 	// 	if u.Email == user.Email {
 	// 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"err": "User already exists."})
@@ -51,11 +50,11 @@ func signUp(ctx *gin.Context) {
 	// }
 
 	// database.InsertStudent(user.Email, user.Password)
-	store.Users = append(store.Users, user)
-	ctx.JSON(http.StatusOK, gin.H{
-		"msg": "Signed up successfully.",
-		"jwt": "123456789",
-	})
+	// store.Users = append(store.Users, user)
+	// ctx.JSON(http.StatusOK, gin.H{
+	// 	"msg": "Signed up successfully.",
+	// 	"jwt": "123456789",
+	// })
 
 }
 
@@ -117,7 +116,7 @@ func updateProfile(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"Errors": "Input error"})
 	}
 	isProfileUpdated := database.UpsertProfile(profile)
-	fmt.Println("Final Ans: ", isProfileUpdated)
+	//fmt.Println("Final Ans: ", isProfileUpdated)
 	if isProfileUpdated {
 		ctx.JSON(http.StatusOK, gin.H{
 			"msg": "Profile updated successfully.",
