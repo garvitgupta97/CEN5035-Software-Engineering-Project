@@ -1,9 +1,9 @@
 package database
 
 import (
-	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -15,7 +15,7 @@ type Users struct {
 }
 
 type Profiles struct {
-	ProfileId      int       `gorm:"column:id;primary_key;AUTO_INCREMENT"  form:"id" json:"id"`
+	ProfileId      int       `gorm:"column:id; primary_key; AUTO_INCREMENT" form:"id" json:"id"`
 	Email          string    `gorm:"not null" form:"email" json:"email"`
 	Name           string    `gorm:"not null column:user_name;NOT NULL" form:"username" json:"username"`
 	University     string    `gorm:"not null column:university" form:"university" json:"university"`
@@ -28,6 +28,30 @@ type Profiles struct {
 	Bio            string    `gorm:"not null column:bio" form:"bio" json:"bio"`
 	CreatedAt      time.Time `gorm:"not null column:created_at;default:CURRENT_TIMESTAMP" form:"created_at" json:"created_at"`
 	UpdatedAt      time.Time `gorm:"not null column:updated_at;default:CURRENT_TIMESTAMP" form:"updated_at" json:"updated_at"`
+}
+
+type Thread struct {
+	ThreadId    uuid.UUID `gorm:"column:thread_id; primary_key; AUTO_INCREMENT"`
+	Title       string    `column:"title"`
+	Description string    `column:"description"`
+}
+
+type Post struct {
+	PostId        uuid.UUID `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
+	UserId        int       `gorm:"column:user_id"`
+	ThreadId      uuid.UUID `gorm:"column:thread_id"`
+	Title         string    `gorm:"column:title"`
+	Content       string    `gorm:"column:content"`
+	Votes         int       `gorm:"column:votes"`
+	CommentsCount int       `gorm:"column:comments_count"`
+	ThreadTitle   string    `gorm:"column:thread_title"`
+}
+
+type Comment struct {
+	CommentId uuid.UUID `gorm:"column:comment_id; primary_key; AUTO_INCREMENT"`
+	PostId    uuid.UUID `gorm:"column:post_id"`
+	Content   string    `gorm:"column:content"`
+	Votes     int       `gorm:"column:votes"`
 }
 
 func InitializeDatabase() *gorm.DB {
@@ -113,9 +137,8 @@ func UpsertProfile(profile *Profiles) bool {
 	// 	Columns:   []clause.Column{{Name: "Email"}},                                                                                                                                                     // key colume
 	// 	DoUpdates: clause.AssignmentColumns([]string{"ProfileId", "Email", "Name", "University", "ProfilePicture", "Gender", "BirthDate", "City", "State", "Country", "Bio", "CreatedAt", "UpdatedAt"}), // column needed to be updated
 	// }).Create(&profile)
-	fmt.Println("Update", db.Model(&profile).Where("Email = ?", profile.Email).Updates(&profile).RowsAffected == 0)
+
 	if db.Model(&profile).Where("Email = ?", profile.Email).Updates(&profile).RowsAffected == 0 {
-		fmt.Println("Exist", isExistingUser(profile.Email))
 		if isExistingUser(profile.Email) {
 			return db.Create(&profile).Error == nil
 		}
@@ -139,4 +162,22 @@ func TestQuery(query string, email string, password string) bool {
 	ans := db.Raw(query, email, password).First(&user).RowsAffected != 0
 
 	return ans
+}
+
+func GetPostById(postId uuid.UUID) Post {
+	post := new(Post)
+	db := InitializeDatabase()
+	defer db.Close()
+	db.Model(&post).Where("PostId = ?", postId).First(&post)
+	return *post
+}
+
+
+func CreatePost(post Post) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	if err := db.Create(&post); err != nil {
+		return false
+	}
+	return true
 }
