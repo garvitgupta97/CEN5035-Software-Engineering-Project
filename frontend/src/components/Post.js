@@ -23,7 +23,6 @@ import { userSelector } from '../selectors';
 const Post = ({
   id,
   type,
-  subreddit,
   author,
   createdAt,
   title,
@@ -56,14 +55,6 @@ const Post = ({
           voteValue={hasVoted}
         />
         <Box flexGrow={1}>
-          <Text
-            as={Link}
-            to={`/r/${subreddit}`}
-            color={postDetailColor}
-            fontWeight="bold"
-          >
-            {`r/${subreddit}`}
-          </Text>{' '}
           <Text as="span" color={postDetailColor}>
             {`Posted by `}
           </Text>
@@ -77,9 +68,9 @@ const Post = ({
           <Heading
             as={isTextPost ? Link : 'a'}
             display="block"
-            to={isTextPost ? `/r/${subreddit}/comments/${id}` : null}
+            // to={isTextPost ? `/r/${subreddit}/comments/${id}` : null}
             href={isTextPost ? null : body}
-            target={isTextPost ? null : '_blank'}
+            // target={isTextPost ? null : '_blank'}
             mt={2}
             mb={4}
             fontSize="1.5em"
@@ -109,7 +100,7 @@ const Post = ({
           >
             <Box
               as={Link}
-              to={`/r/${subreddit}/comments/${id}`}
+              // to={`/r/${subreddit}/comments/${id}`}
               p={2}
               borderRadius="sm"
               _hover={{ backgroundColor: postDetailBgColor }}
