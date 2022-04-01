@@ -41,28 +41,28 @@ const PostList = ({ isLoading, error, postList, getPostList }) => {
       {postList.length > 0 ? (
         postList.map(
           ({
-            id,
+            PostId,
             type,
-            title,
-            body,
+            Title,
+            Content,
             created_at,
-            votes,
+            Votes,
             has_voted,
-            number_of_comments,
+            CommentsCount,
             author_name,
             subreddit_name,
           }) => (
-            <Box key={`${id}-${title}`} my={4}>
+            <Box key={`${PostId}-${Title}`} my={4}>
               <Post
-                id={id}
+                id={PostId}
                 type={type}
                 subreddit={subreddit_name}
                 author={author_name}
                 createdAt={created_at}
-                title={title}
-                body={body}
-                numComments={number_of_comments}
-                numVotes={votes}
+                title={Title}
+                body={Content}
+                numComments={CommentsCount}
+                numVotes={Votes}
                 hasVoted={has_voted}
               />
             </Box>
