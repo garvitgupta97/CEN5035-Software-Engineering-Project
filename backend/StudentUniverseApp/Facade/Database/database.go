@@ -75,7 +75,7 @@ func InitializeDatabase() *gorm.DB {
 	}
 	if !db.HasTable(&Post{}) {
 		db.CreateTable(&Post{})
-		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Profiles{})
+		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Post{})
 	}
 
 	return db
