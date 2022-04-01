@@ -57,3 +57,9 @@ func getPostById(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, fullPost)
 }
+
+
+func getAllPosts(ctx *gin.Context) {
+	postList := database.GetAllPosts()
+	ctx.JSON(http.StatusOK, postList)
+}
