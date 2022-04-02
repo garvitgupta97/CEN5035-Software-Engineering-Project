@@ -3,15 +3,20 @@
 ## Student Universe: Social Media for Students and Job Seekers
 
 ## Team Members
-- Divyansh Shukla
-- Garvit Gupta
-- Prakhar Chauhan
+
+Frontend:
 - Shefali Mishra
+- Garvit Gupta
+
+Backend:
+- Divyansh Shukla
+- Prakhar Chauhan
+
 
 ## Tech Stack
 - Frontend: React 
 - Backend: Golang
-- Database: MySQL
+- Database: SQLite3
 
 ## Project Idea and Description:
 A social media platform for students to collaborate and help each other by sharing job openings, informative articles and interview experiences. 

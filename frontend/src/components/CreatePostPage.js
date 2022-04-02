@@ -16,10 +16,8 @@ import {
   AlertIcon,
 } from '@chakra-ui/react';
 import {
-  createLoadingAndErrorSelector,
-  subredditsSelector,
+  createLoadingAndErrorSelector
 } from '../selectors';
-import { getSubreddits } from '../actions/subreddits';
 import { submitPost } from '../actions/post';
 
 class CreatePostPage extends React.Component {
@@ -30,20 +28,16 @@ class CreatePostPage extends React.Component {
       postType: 'text',
       title: '',
       body: '',
-      url: '',
-      subreddit: '',
+      url: ''
     };
   }
 
-  componentDidMount() {
-    const { getSubreddits } = this.props;
-    getSubreddits();
-  }
+ 
 
   handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const { postType, title, body, url, subreddit } = this.state;
+      const { postType, title, body, url,subreddit } = this.state;
       const { submitPost, history } = this.props;
       const { id } = await submitPost({
         type: postType,
@@ -51,18 +45,18 @@ class CreatePostPage extends React.Component {
         body: postType === 'text' ? body : url,
         subreddit,
       });
-      history.push(`/r/${subreddit}/comments/${id}`);
+      history.push(`/`);
     } catch (err) {}
   };
 
   render() {
-    const { postType, title, body, url, subreddit } = this.state;
+    const {title, body} = this.state;
     const {
       srIsLoading,
-      srError,
+      
       submitIsLoading,
       submitError,
-      subreddits,
+      
     } = this.props;
     return (
       <Box w={['100%', '90%', '80%', '70%']} m="auto">
@@ -75,17 +69,6 @@ class CreatePostPage extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <Stack spacing={3}>
             <FormControl>
-              <RadioGroup
-                value={postType}
-                onChange={(postType) => this.setState({ postType })}
-              >
-                <Stack direction="row" spacing={3}>
-                  <Radio value="text">text post</Radio>
-                  <Radio value="link">link</Radio>
-                </Stack>
-              </RadioGroup>
-            </FormControl>
-            <FormControl>
               <Input
                 value={title}
                 onChange={(e) => this.setState({ title: e.target.value })}
@@ -96,41 +79,16 @@ class CreatePostPage extends React.Component {
               />
             </FormControl>
             <FormControl>
-              {postType === 'text' ? (
                 <Textarea
                   value={body}
                   onChange={(e) => this.setState({ body: e.target.value })}
                   variant="filled"
-                  placeholder="text (optional)"
+                  placeholder="text"
                   rows={10}
+                  isRequired
                 />
-              ) : (
-                <Input
-                  value={url}
-                  onChange={(e) => this.setState({ url: e.target.value })}
-                  type="url"
-                  variant="filled"
-                  placeholder="url"
-                  required
-                />
-              )}
             </FormControl>
-            <FormControl isInvalid={srError}>
-              <Select
-                value={subreddit}
-                onChange={(e) => this.setState({ subreddit: e.target.value })}
-                variant="filled"
-                placeholder={srIsLoading ? 'loading...' : 'choose a subreddit'}
-                isRequired
-              >
-                {subreddits.map(({ name }) => (
-                  <option key={name} value={name}>
-                    {name}
-                  </option>
-                ))}
-              </Select>
-              <FormErrorMessage>Could not load subreddits</FormErrorMessage>
-            </FormControl>
+            
             <Button
               type="submit"
               isLoading={srIsLoading || submitIsLoading || null}
@@ -158,12 +116,11 @@ const mapStateToProps = (state) => ({
   srIsLoading: srLoadingSelector(state),
   srError: srErrorSelector(state),
   submitIsLoading: submitLoadingSelector(state),
-  submitError: submitErrorSelector(state),
-  subreddits: subredditsSelector(state),
+  submitError: submitErrorSelector(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getSubreddits: () => dispatch(getSubreddits()),
+  
   submitPost: (postDetails) => dispatch(submitPost(postDetails)),
 });
 
