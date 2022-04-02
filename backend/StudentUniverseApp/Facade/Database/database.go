@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -10,8 +9,8 @@ import (
 
 type Users struct {
 	Id       int    `gorm:"AUTO_INCREMENT" form:"id" json:"id"`
-	Email    string `gorm:"not null" form:"email" json:"email"`
-	Password string `gorm:"not null" form:"password" json:"password"`
+	Email    string `gorm:"not null" form:"email" json:"email" binding:"required,min=5,max=30,email"`
+	Password string `gorm:"not null" form:"password" json:"password" binding:"required,min=8,max=30"`
 }
 
 type Profiles struct {
@@ -37,14 +36,15 @@ type Thread struct {
 }
 
 type Post struct {
-	PostId        int    `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
-	UserId        int    `gorm:"column:user_id"`
-	ThreadId      int    `gorm:"column:thread_id"`
-	Title         string `gorm:"column:title"`
-	Content       string `gorm:"column:content"`
-	Votes         int    `gorm:"column:votes"`
-	CommentsCount int    `gorm:"column:comments_count"`
-	ThreadTitle   string `gorm:"column:thread_title"`
+	PostId          int       `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
+	UserId          int       `gorm:"column:user_id"`
+	ThreadId        int       `gorm:"column:thread_id"`
+	Title           string    `gorm:"column:title"`
+	Content         string    `gorm:"column:content"`
+	Votes           int       `gorm:"column:votes"`
+	CommentsCount   int       `gorm:"column:comments_count"`
+	PostCreatedTime time.Time `gorm:"not null column:post_created_time;default:CURRENT_TIMESTAMP"`
+	ThreadTitle     string    `gorm:"column:thread_title"`
 }
 
 type Comment struct {
@@ -52,6 +52,19 @@ type Comment struct {
 	PostId    int    `gorm:"column:post_id"`
 	Content   string `gorm:"column:content"`
 	Votes     int    `gorm:"column:votes"`
+}
+
+type AllPosts struct {
+	PostId          int
+	UserId          int
+	ThreadId        int
+	Title           string
+	Content         string
+	Votes           int
+	CommentsCount   int
+	PostCreatedTime time.Time
+	ThreadTitle     string
+	Email           string
 }
 
 func InitializeDatabase() *gorm.DB {
@@ -122,25 +135,6 @@ func isExistingUser(email string) bool {
 func UpsertProfile(profile *Profiles) bool {
 	db := InitializeDatabase()
 	defer db.Close()
-	// profileTemp := new(Profiles)
-	// profileTemp.ProfileId = profileId
-	// profileTemp.Name = name
-	// profileTemp.Email = email
-	// profileTemp.University = university
-	// profileTemp.ProfilePicture = profilePicture
-	// profileTemp.Gender = gender
-	// profileTemp.BirthDate = birthDate
-	// profileTemp.City = city
-	// profileTemp.State = state
-	// profileTemp.Country = country
-	// profileTemp.Bio = bio
-	// profileTemp.CreatedAt = createdAt
-	// profileTemp.UpdatedAt = updatedAt
-
-	// db.Clauses(clause.OnConflict{
-	// 	Columns:   []clause.Column{{Name: "Email"}},                                                                                                                                                     // key colume
-	// 	DoUpdates: clause.AssignmentColumns([]string{"ProfileId", "Email", "Name", "University", "ProfilePicture", "Gender", "BirthDate", "City", "State", "Country", "Bio", "CreatedAt", "UpdatedAt"}), // column needed to be updated
-	// }).Create(&profile)
 
 	if db.Model(&profile).Where("Email = ?", profile.Email).Updates(&profile).RowsAffected == 0 {
 		if isExistingUser(profile.Email) {
@@ -179,14 +173,18 @@ func GetPostById(postId int) Post {
 func CreatePost(post Post) bool {
 	db := InitializeDatabase()
 	defer db.Close()
-	fmt.Println(post)
+	//fmt.Println(post)
 	return db.Create(&post).Error == nil
 }
 
-func GetAllPosts() []Post {
-	var posts []Post
+func GetAllPosts() []AllPosts {
+	//var allPosts Post
+
+	//allPosts := AllPosts{}
+	var allPosts []AllPosts
 	db := InitializeDatabase()
 	defer db.Close()
-	db.Find(&posts)
-	return posts
+	//db.Model(&allPosts).Preload("Users").Find(&allPosts)
+	db.Table("posts").Select("posts.*, users.email").Joins("inner join users on posts.user_id = users.id").Find(&allPosts)
+	return allPosts
 }

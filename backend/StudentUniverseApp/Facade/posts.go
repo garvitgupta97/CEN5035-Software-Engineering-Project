@@ -15,7 +15,7 @@ import (
 
 func createPost(ctx *gin.Context) {
 	post := new(database.Post)
-	
+
 	if err := ctx.Bind(post); err != nil {
 
 		var verr validator.ValidationErrors
@@ -33,7 +33,8 @@ func createPost(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
 		return
 	}
-
+	ctx.JSON(http.StatusOK, gin.H{
+		"msg": "Posted successfully"})
 }
 
 func getPostById(ctx *gin.Context) {
@@ -50,14 +51,13 @@ func getPostById(ctx *gin.Context) {
 		return
 	}
 	fullPost := database.GetPostById(post.PostId)
-	if string(fullPost.UserId) == "" {
+	if (fullPost.PostId) == 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{"Error": "Post not found"})
 		return
 	}
 
 	ctx.JSON(http.StatusOK, fullPost)
 }
-
 
 func getAllPosts(ctx *gin.Context) {
 	postList := database.GetAllPosts()
