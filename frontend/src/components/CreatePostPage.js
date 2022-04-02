@@ -32,15 +32,12 @@ class CreatePostPage extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   const { getSubreddits } = this.props;
-  //   getSubreddits();
-  // }
+ 
 
   handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const { postType, title, body, url, subreddit } = this.state;
+      const { postType, title, body, url,subreddit } = this.state;
       const { submitPost, history } = this.props;
       const { id } = await submitPost({
         type: postType,
@@ -53,13 +50,13 @@ class CreatePostPage extends React.Component {
   };
 
   render() {
-    const { postType, title, body, url, subreddit } = this.state;
+    const { postType, title, body, url } = this.state;
     const {
       srIsLoading,
-      srError,
+      
       submitIsLoading,
       submitError,
-      subreddits,
+      
     } = this.props;
     return (
       <Box w={['100%', '90%', '80%', '70%']} m="auto">
@@ -71,17 +68,6 @@ class CreatePostPage extends React.Component {
         )}
         <form onSubmit={this.handleSubmit}>
           <Stack spacing={3}>
-            <FormControl>
-              <RadioGroup
-                value={postType}
-                onChange={(postType) => this.setState({ postType })}
-              >
-                <Stack direction="row" spacing={3}>
-                  <Radio value="text">text post</Radio>
-                  <Radio value="link">link</Radio>
-                </Stack>
-              </RadioGroup>
-            </FormControl>
             <FormControl>
               <Input
                 value={title}
@@ -112,22 +98,7 @@ class CreatePostPage extends React.Component {
                 />
               )}
             </FormControl>
-            <FormControl isInvalid={srError}>
-              <Select
-                value={subreddit}
-                onChange={(e) => this.setState({ subreddit: e.target.value })}
-                variant="filled"
-                placeholder={srIsLoading ? 'loading...' : 'choose a subreddit'}
-                isRequired
-              >
-                {subreddits.map(({ name }) => (
-                  <option key={name} value={name}>
-                    {name}
-                  </option>
-                ))}
-              </Select>
-              <FormErrorMessage>Could not load subreddits</FormErrorMessage>
-            </FormControl>
+            
             <Button
               type="submit"
               isLoading={srIsLoading || submitIsLoading || null}
@@ -159,7 +130,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // getSubreddits: () => dispatch(getSubreddits()),
+  
   submitPost: (postDetails) => dispatch(submitPost(postDetails)),
 });
 
