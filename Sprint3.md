@@ -28,18 +28,28 @@ A social media platform for students to collaborate and help each other by shari
   ![This is an image](https://raw.githubusercontent.com/garvitgupta97/CEN5035-Software-Engineering-Project/main/Resources/HomePageDemo.png)
 
 
-### Success Case
+### Logged In Home Page Demo
 
-  ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/5f935876f1f276d8eea001294df14f5c4760e650/Resources/signup_successful.png)
-
-
-### Success Case
-
-  ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/5f935876f1f276d8eea001294df14f5c4760e650/Resources/signup_successful.png)
+  ![This is an image](https://raw.githubusercontent.com/garvitgupta97/CEN5035-Software-Engineering-Project/main/Resources/LoggedInHomePageDemo.png)
 
 
+### Log in Page Demo
 
+  ![This is an image](https://raw.githubusercontent.com/garvitgupta97/CEN5035-Software-Engineering-Project/main/Resources/LoginPageDemo.png)
 
+### New Post on Home Page Demo
+
+  ![This is an image](https://raw.githubusercontent.com/garvitgupta97/CEN5035-Software-Engineering-Project/main/Resources/NewPostOnHomePageDemo.png)
+
+### Post Page Demo
+
+  ![This is an image](https://raw.githubusercontent.com/garvitgupta97/CEN5035-Software-Engineering-Project/main/Resources/PostPageDemo.png)
+
+### Register Page Demo
+
+  ![This is an image](https://raw.githubusercontent.com/garvitgupta97/CEN5035-Software-Engineering-Project/main/Resources/RegisterPageDemo.png)
+
+## Api documentation of backend services
 ### Api for user sign up
 
 - [http://localhost:8080/api/signup/] (http://localhost:8080/api/signup/)
