@@ -88,3 +88,33 @@ func Test_SignIn_SinginSuccess(t *testing.T) {
 	r.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusOK, w.Code, "Test passed - Login")
 }
+
+func Test_Post_CreatePost(t *testing.T) {
+	testPost := &database.Post{
+		UserId:        1,
+		ThreadId:      1,
+		Title:         "title",
+		Content:       "contnr",
+		Votes:         2,
+		CommentsCount: 0,
+		ThreadTitle:   "thread",
+	}
+	userformValue, _ := json.Marshal(testPost)
+	r := rtr.SetRouter()
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodPost, "/api/post/create", bytes.NewBuffer(userformValue))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusOK, w.Code, "Test passed - Creation")
+}
+
+func Test_Post_GetAllPosts(t *testing.T){
+	testPost := &database.GetAllPosts()[]
+	userformValue, _ := json.Marshal(testPost)
+	r := rtr.SetRouter()
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodPost, "/api/post/allPosts", bytes.NewBuffer(userformValue))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusOK, w.Code, "Test passed - Get all posts")
+}
