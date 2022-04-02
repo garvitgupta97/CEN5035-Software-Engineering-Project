@@ -73,14 +73,14 @@ A social media platform for students to collaborate and help each other by shari
 ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/getUsers.png)
 
 ### API to upsert user profile
-- [api/getUsers/](api/getUsers/)
+- [api/getUsers/](api/updateProfile/)
 ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/updateProfile.png)
 
 ### API to create a new post
-- [api/getUsers/](api/getUsers/)
+- [api/getUsers/](api/post/create/)
 ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/createPost.png)
 
 
 ### API to create a fetch all posts
-- [api/getUsers/](api/getUsers/)
+- [api/getUsers/](api/post/allPosts/)
 ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/allPosts.png)
