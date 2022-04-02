@@ -4,7 +4,7 @@ import { tokenSelector } from './selectors';
 
 
 const instance = axios.create({
-  baseURL: "http://localhost:8082",
+  baseURL: "http://192.168.0.226:8082",
 });
 
 instance.interceptors.request.use((config) => {

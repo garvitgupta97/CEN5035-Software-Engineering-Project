@@ -15,11 +15,10 @@ import { createLoadingAndErrorSelector, postListSelector } from '../selectors';
 import { getPostList } from '../actions/postList';
 
 const PostList = ({ isLoading, error, postList, getPostList }) => {
-  const { subreddit } = useParams();
 
   useEffect(() => {
-    getPostList({ subreddit });
-  }, [getPostList, subreddit]);
+    getPostList({ });
+  }, [getPostList]);
 
   if (isLoading) {
     return (
@@ -37,7 +36,7 @@ const PostList = ({ isLoading, error, postList, getPostList }) => {
   }
   return (
     <Box>
-      <Heading>{subreddit ? `r/${subreddit}` : 'Home'}</Heading>
+      <Heading>{'Home'}</Heading>
       {postList.length > 0 ? (
         postList.map(
           ({
@@ -49,14 +48,12 @@ const PostList = ({ isLoading, error, postList, getPostList }) => {
             Votes,
             has_voted,
             CommentsCount,
-            author_name,
-            subreddit_name,
+            author_name
           }) => (
             <Box key={`${PostId}-${Title}`} my={4}>
               <Post
                 id={PostId}
                 type={'text'}
-                subreddit={subreddit_name}
                 author={author_name}
                 createdAt={created_at}
                 title={Title}

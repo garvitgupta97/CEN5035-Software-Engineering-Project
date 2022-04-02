@@ -20,11 +20,11 @@ export const submitPost = (postDetails) => async (dispatch) => {
   const { type, title, body, subreddit } = postDetails;
   try {
     dispatch({ type: 'SUBMIT_POST_REQUEST' });
-    const response = await axios.post('/posts', {
-      type,
-      title,
-      body,
-      subreddit,
+    const response = await axios.post('/api/post/create', 
+    {
+      "Title":title,
+      "UserId":1,
+      "Content":body
     });
     dispatch({ type: 'SUBMIT_POST_SUCCESS' });
     return response.data;
