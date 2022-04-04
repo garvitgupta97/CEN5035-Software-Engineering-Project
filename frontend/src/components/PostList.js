@@ -43,11 +43,9 @@ const PostList = ({ isLoading, error, postList, getPostList }) => {
             PostId,
             Title,
             Content,
-            created_at,
             Votes,
-            has_voted,
+            hasVoted,
             CommentsCount,
-            author_name,
             Email,
             PostCreatedTime
           }) => (
@@ -61,7 +59,7 @@ const PostList = ({ isLoading, error, postList, getPostList }) => {
                 body={Content}
                 numComments={CommentsCount}
                 numVotes={Votes}
-                hasVoted={1}
+                hasVoted={hasVoted}
               />
             </Box>
           )

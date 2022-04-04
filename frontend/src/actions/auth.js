@@ -34,7 +34,6 @@ export const startLogin = (username, password) => async (dispatch) => {
 export const startLogout = () => async (dispatch, getState) => {
   try {
     dispatch({ type: 'LOGOUT_REQUEST' });
-    // await axios.post('/users/logout');
     dispatch(logout());
     dispatch(editPost(1, { has_voted: null }));
     dispatch(
