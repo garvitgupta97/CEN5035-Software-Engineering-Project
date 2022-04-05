@@ -94,8 +94,8 @@ const Post = ({
             fontWeight="bold"
           >
             <Box
-              // as={Link}
-              // to={`/r/${subreddit}/comments/${id}`}
+              as={Link}
+              to={`/comments/${id}`}
               p={2}
               borderRadius="sm"
               _hover={{ backgroundColor: postDetailBgColor }}
