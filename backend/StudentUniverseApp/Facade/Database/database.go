@@ -50,10 +50,12 @@ type Post struct {
 }
 
 type Comment struct {
-	CommentId int    `gorm:"column:comment_id; primary_key; AUTO_INCREMENT"`
-	PostId    int    `gorm:"column:post_id"`
-	Content   string `gorm:"column:content"`
-	Votes     int    `gorm:"column:votes"`
+	CommentId int       `gorm:"column:comment_id; primary_key; AUTO_INCREMENT"`
+	UserId    int       `gorm:"column:user_id"`
+	PostId    int       `gorm:"column:post_id"`
+	Content   string    `gorm:"column:content"`
+	CreatedAt time.Time `gorm:"not null column:created_at;"`
+	UpdatedAt time.Time `gorm:"not null column:updated_at;"`
 }
 
 type AllPosts struct {
