@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -25,8 +26,8 @@ type Profiles struct {
 	State          string    `gorm:"not null column:state" form:"state" json:"state"`
 	Country        string    `gorm:"not null column:country" form:"country" json:"country"`
 	Bio            string    `gorm:"not null column:bio" form:"bio" json:"bio"`
-	CreatedAt      time.Time `gorm:"not null column:created_at;default:CURRENT_TIMESTAMP" form:"created_at" json:"created_at"`
-	UpdatedAt      time.Time `gorm:"not null column:updated_at;default:CURRENT_TIMESTAMP" form:"updated_at" json:"updated_at"`
+	CreatedAt      time.Time `gorm:"not null column:created_at;"`
+	UpdatedAt      time.Time `gorm:"not null column:updated_at;"`
 }
 
 type Thread struct {
@@ -36,15 +37,16 @@ type Thread struct {
 }
 
 type Post struct {
-	PostId          int       `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
-	UserId          int       `gorm:"column:user_id"`
-	ThreadId        int       `gorm:"column:thread_id"`
-	Title           string    `gorm:"column:title"`
-	Content         string    `gorm:"column:content"`
-	Votes           int       `gorm:"column:votes"`
-	CommentsCount   int       `gorm:"column:comments_count"`
-	PostCreatedTime time.Time `gorm:"not null column:post_created_time;default:CURRENT_TIMESTAMP"`
-	ThreadTitle     string    `gorm:"column:thread_title"`
+	PostId        int       `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
+	UserId        int       `gorm:"column:user_id"`
+	ThreadId      int       `gorm:"column:thread_id"`
+	Title         string    `gorm:"column:title"`
+	Content       string    `gorm:"column:content"`
+	Votes         int       `gorm:"column:votes"`
+	CommentsCount int       `gorm:"column:comments_count"`
+	CreatedAt     time.Time `gorm:"not null column:created_at;"`
+	UpdatedAt     time.Time `gorm:"not null column:updated_at;"`
+	ThreadTitle   string    `gorm:"column:thread_title"`
 }
 
 type Comment struct {
@@ -55,16 +57,17 @@ type Comment struct {
 }
 
 type AllPosts struct {
-	PostId          int
-	UserId          int
-	ThreadId        int
-	Title           string
-	Content         string
-	Votes           int
-	CommentsCount   int
-	PostCreatedTime time.Time
-	ThreadTitle     string
-	Email           string
+	PostId        int
+	UserId        int
+	ThreadId      int
+	Title         string
+	Content       string
+	Votes         int
+	CommentsCount int
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	ThreadTitle   string
+	Email         string
 }
 
 func InitializeDatabase() *gorm.DB {
@@ -78,6 +81,8 @@ func InitializeDatabase() *gorm.DB {
 		panic(err)
 	}
 	// Creating the table
+	//db.AutoMigrate(&Post{})
+
 	if !db.HasTable(&Users{}) {
 		db.CreateTable(&Users{})
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Users{})
@@ -167,13 +172,14 @@ func GetPostById(postId int) Post {
 	db := InitializeDatabase()
 	defer db.Close()
 	db.Model(&post).Where("PostId = ?", postId).First(&post)
+	fmt.Print(postId, *post)
 	return *post
 }
 
 func CreatePost(post Post) bool {
 	db := InitializeDatabase()
 	defer db.Close()
-	//fmt.Println(post)
+	//fmt.Println(db.Create(&post).Error)
 	return db.Create(&post).Error == nil
 }
 
