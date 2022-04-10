@@ -14,10 +14,12 @@ import ThemedBox from './components/ThemedBox';
 
 function App() {
   return (
+    
     <ChakraProvider theme={theme}>
       <Router>
+      <Navbar />
         <ThemedBox minHeight="100vh" light="gray.300" dark="gray.800">
-          <Navbar />
+       
           <Flex justifyContent="center">
             <Box width={['95%', '80%', '70%', '60%']} mb={10}>
               <Switch>

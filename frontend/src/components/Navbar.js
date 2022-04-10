@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Box } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Heading,
@@ -30,13 +31,14 @@ const Navbar = ({
   const location = useLocation();
 
   return (
-    <ThemedBox
+    <Box
       py={2}
       px={[0, 0, 10, 10]}
       display="flex"
       justifyContent="flex-start"
       alignItems="center"
-      mb={7}
+      
+      // mb={7}
     >
       <Heading
         ml={[2, 4]}
@@ -82,7 +84,7 @@ const Navbar = ({
         <LoginAndRegisterButtons />
       )}
       <ColorModeSwitcher />
-    </ThemedBox>
+    </Box>
   );
 };
 
