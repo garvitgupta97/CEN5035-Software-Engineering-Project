@@ -42,7 +42,8 @@ class LoginPage extends React.Component {
     const requireAuth =
       location && location.state && location.state.requireAuth;
     return (
-      <Box w={300} m="auto">
+      // borders of edit boxes
+      <Box w={300} mt={10} ml='auto' mr='auto' >
         {requireAuth && (
           <Alert status="warning" mb={2}>
             <AlertIcon />
@@ -81,7 +82,7 @@ class LoginPage extends React.Component {
                 isRequired
               />
             </FormControl>
-            <Button type="submit" isLoading={isLoading || null}>
+            <Button type="submit" isLoading={isLoading || null} mt = {15}>
               Login
             </Button>
           </Stack>
