@@ -49,6 +49,13 @@ type Post struct {
 	ThreadTitle   string    `gorm:"column:thread_title"`
 }
 
+type PostVotes struct {
+	Id        int    `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
+	PostId    int    `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
+	UserEmail string `gorm:"column:user_email"`
+	Votes     int    `gorm:"column:votes"`
+}
+
 type Comment struct {
 	CommentId int       `gorm:"column:comment_id; primary_key; AUTO_INCREMENT"`
 	UserId    int       `gorm:"column:user_id"`
@@ -106,6 +113,11 @@ func InitializeDatabase() *gorm.DB {
 	if !db.HasTable(&Post{}) {
 		db.CreateTable(&Post{})
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Post{})
+	}
+
+	if !db.HasTable(&PostVotes{}) {
+		db.CreateTable(&PostVotes{})
+		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&PostVotes{})
 	}
 
 	return db
@@ -222,4 +234,11 @@ func GetCommentsByPosts(postId int) []AllComments {
 	//db.Model(&allPosts).Preload("Users").Find(&allPosts)
 	db.Table("comments").Where("post_id = ?", postId).Select("comments.*, users.email").Joins("inner join users on comments.user_id = users.id").Find(&allComments)
 	return allComments
+}
+
+func AddPostVote(postVotes PostVotes) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	//fmt.Println(db.Create(&post).Error)
+	return db.Create(&postVotes).Error == nil
 }

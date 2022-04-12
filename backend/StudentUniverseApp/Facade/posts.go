@@ -63,3 +63,27 @@ func getAllPosts(ctx *gin.Context) {
 	postList := database.GetAllPosts()
 	ctx.JSON(http.StatusOK, postList)
 }
+
+func addPostVote(ctx *gin.Context) {
+	postVotesData := new(database.PostVotes)
+	if err := ctx.Bind(postVotesData); err != nil {
+
+		var verr validator.ValidationErrors
+		if errors.As(err, &verr) {
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
+			return
+		}
+
+		log.Info().Err(err).Msg("unable to bind")
+
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Post Fail": err.Error()})
+		return
+	}
+	if !database.AddPostVote(*postVotesData) {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"msg": "Posted successfully"})
+
+}
