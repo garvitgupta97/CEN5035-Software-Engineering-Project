@@ -33,15 +33,13 @@ it('Launching', () => {
 
     cy.findByRole('button', { name: /Login/i }).click();
 
-    cy.get('#menu-button-10').click();
+    // cy.get('#menu-button-10').click();
 
-    cy.contains('button', 'Logout').click();
+    // cy.contains('testuser@gmail.com', 'Logout').click();
+    cy.findByRole('button', { name: /testuser@gmail.com/i }).click();
 
+    cy.get('#menu-list-6-menuitem-4').click();
 
-    // cy.findByRole('button', { name: /Login/i }).click();
+   
 
-    cy.contains('StUni')
-      .should('be.visible')
-    cy.contains('Home')
-      .should('be.visible')
   })
