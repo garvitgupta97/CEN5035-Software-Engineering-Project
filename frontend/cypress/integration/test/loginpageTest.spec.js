@@ -33,6 +33,11 @@ it('Launching', () => {
     .type('testuser');
 
     cy.findByRole('button', { name: /Login/i }).click();
-
+      cy.contains('.d-inline-block')
+      .should('be.visible')
+      cy.contains('Submit')
+      .should('be.visible')
+    cy.contains('Home')
+      .should('be.visible')
 
   })
