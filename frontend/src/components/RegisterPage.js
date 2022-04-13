@@ -79,7 +79,7 @@ class RegisterPage extends React.Component {
                 size="md"
                 isRequired
                 backgroundImage="null"
-                backgroundColor="black"
+                backgroundColor="gray.800"
                 
                 textColor={'black'}
               />

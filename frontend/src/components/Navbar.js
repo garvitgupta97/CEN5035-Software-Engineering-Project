@@ -21,6 +21,7 @@ import {
 } from '../selectors';
 import { startLogout } from '../actions/auth';
 import LoginAndRegisterButtons from './LoginAndRegisterButtons';
+import {Logo} from '../Logo'
 
 const Navbar = ({
   user,
@@ -40,16 +41,17 @@ const Navbar = ({
       
       // mb={7}
     >
-      <Heading
-        ml={[2, 4]}
-        display={user ? 'block' : ['none', 'block']}
-        fontSize={['1.3rem', '2.25rem']}
-        mr={[2, 4]}
-      >
-        StUni
-      </Heading>
-
+        {/* <Heading
+          ml={[2, 4]}
+          display={user ? 'block' : ['none', 'block']}
+          fontSize={['1.3rem', '2.25rem']}
+          mr={[2, 4]}
+        >
+          StudentUniverse
+        </Heading> */}
+      <Logo  />
       <HStack>
+      
         <Button display={['none', 'flex']} as={Link} to="/">
           Home
         </Button>
