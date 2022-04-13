@@ -50,8 +50,8 @@ type Post struct {
 }
 
 type PostVotes struct {
-	Id        int    `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
-	PostId    int    `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
+	Id        int    `gorm:"column:id; primary_key; AUTO_INCREMENT"`
+	PostId    int    `gorm:"column:post_id"`
 	UserEmail string `gorm:"column:user_email"`
 	Votes     int    `gorm:"column:votes"`
 }

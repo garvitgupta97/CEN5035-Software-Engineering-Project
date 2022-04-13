@@ -13,6 +13,11 @@ import (
 	log "github.com/rs/zerolog/log"
 )
 
+type PostVotesDTO struct {
+	user_id string
+	post_id int
+}
+
 func createPost(ctx *gin.Context) {
 	post := new(database.Post)
 
@@ -79,11 +84,15 @@ func addPostVote(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Post Fail": err.Error()})
 		return
 	}
+
 	if !database.AddPostVote(*postVotesData) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"msg": "Posted successfully"})
+		"user_id":    postVotesData.UserEmail,
+		"post_id":    postVotesData.PostId,
+		"vote_value": 1,
+	})
 
 }
