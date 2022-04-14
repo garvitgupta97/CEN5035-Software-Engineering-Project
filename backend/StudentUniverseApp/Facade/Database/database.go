@@ -262,3 +262,11 @@ func AddCommentVote(commentVotes CommentVotes) bool {
 	//fmt.Println(db.Create(&post).Error)
 	return db.Create(&commentVotes).Error == nil
 }
+
+func DeleteComment(comment Comment) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	//fmt.Println(db.Create(&post).Error)
+
+	return 	db.Where("comment_id = ?", comment.CommentId).Delete(&comment).Error == nil
+}

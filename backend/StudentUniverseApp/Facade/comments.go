@@ -85,6 +85,34 @@ func getCommentByPostId(ctx *gin.Context) {
 	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Request Failed": ""})
 
 }
+func deleteComment(ctx *gin.Context) {
+	if ctx.Request.Header["Authorization"] == nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
+		return
+	}
+
+	commentData := new(database.Comment)
+	if err := ctx.Bind(commentData); err != nil {
+
+		var verr validator.ValidationErrors
+		if errors.As(err, &verr) {
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
+			return
+		}
+
+		log.Info().Err(err).Msg("unable to bind")
+
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Comment vote  Failed": err.Error()})
+		return
+	}
+	if !database.DeleteComment(*commentData) {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Comment vote failed": "DB Error"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"Delete": "Success",
+	})
+}
 
 func addCommentVote(ctx *gin.Context) {
 	if ctx.Request.Header["Authorization"] == nil {
