@@ -85,3 +85,36 @@ func getCommentByPostId(ctx *gin.Context) {
 	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Request Failed": ""})
 
 }
+
+func addcommentVote(ctx *gin.Context) {
+	if ctx.Request.Header["Authorization"] == nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
+		return
+	}
+
+	commentVotesData := new(database.CommentVotes)
+	if err := ctx.Bind(commentVotesData); err != nil {
+
+		var verr validator.ValidationErrors
+		if errors.As(err, &verr) {
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
+			return
+		}
+
+		log.Info().Err(err).Msg("unable to bind")
+
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Comment vote  Failed": err.Error()})
+		return
+	}
+	commentVotesData.UserEmail = ctx.Request.Header["Authorization"][0]
+	if !database.AddCommentVote(*commentVotesData) {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Comment vote failed": "DB Error"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"user_id":    commentVotesData.UserEmail,
+		"comment_id": commentVotesData.CommentId,
+		"vote_value": commentVotesData.VoteValue,
+	})
+
+}
