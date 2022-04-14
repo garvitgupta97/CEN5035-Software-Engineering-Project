@@ -70,6 +70,11 @@ func getAllPosts(ctx *gin.Context) {
 }
 
 func addPostVote(ctx *gin.Context) {
+	if ctx.Request.Header["Authorization"] == nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
+		return
+	}
+
 	postVotesData := new(database.PostVotes)
 	if err := ctx.Bind(postVotesData); err != nil {
 
@@ -84,7 +89,7 @@ func addPostVote(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Post Fail": err.Error()})
 		return
 	}
-
+	postVotesData.UserEmail = ctx.Request.Header["Authorization"][0]
 	if !database.AddPostVote(*postVotesData) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
 		return
@@ -92,7 +97,7 @@ func addPostVote(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"user_id":    postVotesData.UserEmail,
 		"post_id":    postVotesData.PostId,
-		"vote_value": 1,
+		"vote_value": postVotesData.VoteValue,
 	})
 
 }

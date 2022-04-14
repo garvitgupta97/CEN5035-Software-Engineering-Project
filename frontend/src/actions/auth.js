@@ -20,7 +20,7 @@ export const startLogin = (username, password) => async (dispatch) => {
       "Password":password,
     });
     const { token, user } = {token: response.data.jwt,user:{username:username}};
-    dispatch(login(user, token));
+    dispatch(login(user, username));
     dispatch({ type: 'LOGIN_SUCCESS' });
   } catch (e) {
     dispatch({
@@ -70,7 +70,7 @@ export const startRegister = (username, password) => async (dispatch) => {
       "Password":password
     });
     const { token, user } = {token: response.data.jwt,user:{username:username}};
-    dispatch(login(user, token));
+    dispatch(login(user, username));
     dispatch({ type: 'REGISTER_SUCCESS' });
   } catch (e) {
     dispatch({

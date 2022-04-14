@@ -20,18 +20,15 @@ const UpvoteBar = ({
 
   const upvoteIcon = (
     <TriangleUpIcon
-      color= 'black' 
-      // {voteValue === 1 ? upvoteColor : null}
+      color={voteValue === 1 ? upvoteColor : null}
       w={size}
       h={size}
-      backgroundColor="inherit"
       _hover={{ color: upvoteColor }}
     />
   );
 
   const downvoteIcon = (
     <TriangleDownIcon
-    color= 'black' 
       w={size}
       h={size}
       _groupHover={{ color: downvoteColor }}
@@ -78,7 +75,7 @@ const UpvoteBar = ({
         boxShadow="none !important"
         icon={upvoteIcon}
       />
-      <Text fontSize={3.5 * size} color='black' >
+      <Text fontSize={3.5 * size} color={numberColor} >
         {numVotes}
       </Text>
       <IconButton
