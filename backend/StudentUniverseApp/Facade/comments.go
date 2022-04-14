@@ -86,7 +86,7 @@ func getCommentByPostId(ctx *gin.Context) {
 
 }
 
-func addcommentVote(ctx *gin.Context) {
+func addCommentVote(ctx *gin.Context) {
 	if ctx.Request.Header["Authorization"] == nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
 		return
