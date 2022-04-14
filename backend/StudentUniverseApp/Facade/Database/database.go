@@ -268,5 +268,12 @@ func DeleteComment(comment Comment) bool {
 	defer db.Close()
 	//fmt.Println(db.Create(&post).Error)
 
-	return 	db.Where("comment_id = ?", comment.CommentId).Delete(&comment).Error == nil
+	return db.Where("comment_id = ?", comment.CommentId).Delete(&comment).Error == nil
+}
+
+func DeletePost(post Post) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	//fmt.Println(db.Create(&post).Error)
+	return db.Where("post_id = ?", post.PostId).Delete(&post).Error == nil
 }

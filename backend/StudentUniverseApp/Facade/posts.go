@@ -102,4 +102,31 @@ func addPostVote(ctx *gin.Context) {
 
 }
 
+func deletePost(ctx *gin.Context) {
+	if ctx.Request.Header["Authorization"] == nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
+		return
+	}
 
+	postData := new(database.Post)
+	if err := ctx.Bind(postData); err != nil {
+
+		var verr validator.ValidationErrors
+		if errors.As(err, &verr) {
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
+			return
+		}
+
+		log.Info().Err(err).Msg("unable to bind")
+
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Post delete Failed": err.Error()})
+		return
+	}
+	if !database.DeletePost(*postData) {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post delete failed": "DB Error"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"Post Delete": "Success",
+	})
+}

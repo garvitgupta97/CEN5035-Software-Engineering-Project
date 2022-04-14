@@ -96,17 +96,17 @@ func deleteComment(ctx *gin.Context) {
 
 		var verr validator.ValidationErrors
 		if errors.As(err, &verr) {
-			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
+			ctx.JSON(http.StatusBadRequest, gin.H{"Error": SimpleErrorMsg(verr)})
 			return
 		}
 
 		log.Info().Err(err).Msg("unable to bind")
 
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Comment vote  Failed": err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Comment deletion Failed": err.Error()})
 		return
 	}
 	if !database.DeleteComment(*commentData) {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Comment vote failed": "DB Error"})
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Comment deletion failed": "DB Error"})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
