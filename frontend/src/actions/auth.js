@@ -19,8 +19,8 @@ export const startLogin = (username, password) => async (dispatch) => {
       "Email":username,
       "Password":password,
     });
-    const { token, user } = {token: response.data.jwt,user:{username:username}};
-    dispatch(login(user, username));
+    const { token, user } = {token: username,user:{username:username}};
+    dispatch(login(user, token));
     dispatch({ type: 'LOGIN_SUCCESS' });
   } catch (e) {
     dispatch({
@@ -69,8 +69,8 @@ export const startRegister = (username, password) => async (dispatch) => {
       "Email":username,
       "Password":password
     });
-    const { token, user } = {token: response.data.jwt,user:{username:username}};
-    dispatch(login(user, username));
+    const { token, user } = {token: username,user:{username:username}};
+    dispatch(login(user, token));
     dispatch({ type: 'REGISTER_SUCCESS' });
   } catch (e) {
     dispatch({
