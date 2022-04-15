@@ -56,13 +56,21 @@ type PostVotes struct {
 	VoteValue int    `gorm:"column:votes"`
 }
 
+type CommentVotes struct {
+	Id        int    `gorm:"column:id; primary_key; AUTO_INCREMENT"`
+	CommentId int    `gorm:"column:comment_id"`
+	UserEmail string `gorm:"column:user_email"`
+	VoteValue int    `gorm:"column:votes"`
+}
+
 type Comment struct {
-	CommentId int       `gorm:"column:comment_id; primary_key; AUTO_INCREMENT"`
-	UserId    int       `gorm:"column:user_id"`
-	PostId    int       `gorm:"column:post_id"`
-	Content   string    `gorm:"column:content"`
-	CreatedAt time.Time `gorm:"not null column:created_at;"`
-	UpdatedAt time.Time `gorm:"not null column:updated_at;"`
+	CommentId       int       `gorm:"column:comment_id; primary_key; AUTO_INCREMENT"`
+	ParentCommentId int       `gorm:"column:parent_comment_id; primary_key; AUTO_INCREMENT"`
+	UserId          int       `gorm:"column:user_id"`
+	PostId          int       `gorm:"column:post_id"`
+	Content         string    `gorm:"column:content"`
+	CreatedAt       time.Time `gorm:"not null column:created_at;"`
+	UpdatedAt       time.Time `gorm:"not null column:updated_at;"`
 }
 
 type CommentPost struct {
@@ -246,4 +254,26 @@ func AddPostVote(postVotes PostVotes) bool {
 	defer db.Close()
 	//fmt.Println(db.Create(&post).Error)
 	return db.Create(&postVotes).Error == nil
+}
+
+func AddCommentVote(commentVotes CommentVotes) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	//fmt.Println(db.Create(&post).Error)
+	return db.Create(&commentVotes).Error == nil
+}
+
+func DeleteComment(comment Comment) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	//fmt.Println(db.Create(&post).Error)
+
+	return db.Where("comment_id = ?", comment.CommentId).Delete(&comment).Error == nil
+}
+
+func DeletePost(post Post) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	//fmt.Println(db.Create(&post).Error)
+	return db.Where("post_id = ?", post.PostId).Delete(&post).Error == nil
 }
