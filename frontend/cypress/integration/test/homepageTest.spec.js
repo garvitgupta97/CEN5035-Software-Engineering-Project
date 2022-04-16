@@ -17,15 +17,17 @@ it('Launching', () => {
 
     cy.visit('http://localhost:3000/')
 
-
+    // Home 
     cy.contains('Home')
       .should('be.visible')
       cy.log('Home button present')
 
+      // Logo
       cy.get('.d-inline-block')
       .should('be.visible')
       cy.log('Logo present')
     
+      
 
       // chakra present and theme change working
       cy.get('.css-a2c8bh > svg > path')
