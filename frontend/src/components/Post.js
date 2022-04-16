@@ -23,7 +23,6 @@ import { userSelector } from '../selectors';
 const Post = ({
   id,
   type,
-  subreddit,
   author,
   createdAt,
   title,
@@ -36,7 +35,6 @@ const Post = ({
   const { colorMode } = useColorMode();
   const postDetailColor = 'gray.500';
   const postDetailBgColor = colorMode === 'light' ? 'gray.100' : 'gray.600';
-  const isTextPost = type === 'text';
 
   const [isEditing, setIsEditing] = useState(false);
   const deletedText = '[deleted]';
@@ -56,14 +54,6 @@ const Post = ({
           voteValue={hasVoted}
         />
         <Box flexGrow={1}>
-          <Text
-            as={Link}
-            to={`/r/${subreddit}`}
-            color={postDetailColor}
-            fontWeight="bold"
-          >
-            {`r/${subreddit}`}
-          </Text>{' '}
           <Text as="span" color={postDetailColor}>
             {`Posted by `}
           </Text>
@@ -75,11 +65,8 @@ const Post = ({
             </Tooltip>
           </Text>
           <Heading
-            as={isTextPost ? Link : 'a'}
             display="block"
-            to={isTextPost ? `/r/${subreddit}/comments/${id}` : null}
-            href={isTextPost ? null : body}
-            target={isTextPost ? null : '_blank'}
+            href={body}
             mt={2}
             mb={4}
             fontSize="1.5em"
@@ -87,8 +74,7 @@ const Post = ({
           >
             {title || deletedText}
           </Heading>
-          {isTextPost ? (
-            isEditing ? (
+          {isEditing ? (
               <EditBox
                 type="post"
                 id={id}
@@ -100,7 +86,7 @@ const Post = ({
                 <ChakraMarkdown>{body}</ChakraMarkdown>
               </Box>
             )
-          ) : null}
+          }
           <Flex
             mt={3}
             alignItems="center"
@@ -108,8 +94,8 @@ const Post = ({
             fontWeight="bold"
           >
             <Box
-              as={Link}
-              to={`/r/${subreddit}/comments/${id}`}
+              // as={Link}
+              // to={`/r/${subreddit}/comments/${id}`}
               p={2}
               borderRadius="sm"
               _hover={{ backgroundColor: postDetailBgColor }}
@@ -121,7 +107,7 @@ const Post = ({
         </Box>
         {user && user.username === author && (
           <HStack alignItems="flex-start">
-            {isTextPost && !isEditing && (
+            {!isEditing && (
               <IconButton
                 onClick={() => setIsEditing(true)}
                 backgroundColor="inherit"
