@@ -67,8 +67,8 @@ class RegisterPage extends React.Component {
           </Alert>
         )}
         <form onSubmit={this.handleSubmit}>
-          <Stack spacing={3}>
-            <FormControl>
+          <Stack spacing={3}  >
+            <FormControl >
               <Input
                 value={username}
                 onChange={(e) => this.setState({ username: e.target.value })}
@@ -78,6 +78,10 @@ class RegisterPage extends React.Component {
                 placeholder="username"
                 size="md"
                 isRequired
+                backgroundImage="null"
+                backgroundColor="black"
+                
+                textColor={'black'}
               />
             </FormControl>
             <FormControl>
@@ -90,6 +94,10 @@ class RegisterPage extends React.Component {
                 placeholder="password"
                 size="md"
                 isRequired
+                backgroundImage="null"
+                backgroundColor="gray.800"
+                
+                textColor={'black'}
               />
             </FormControl>
             <FormControl isInvalid={doNotMatchError}>
@@ -104,10 +112,14 @@ class RegisterPage extends React.Component {
                 placeholder="confirm password"
                 size="md"
                 isRequired
+                backgroundImage="null"
+                backgroundColor="gray.800"
+                
+                textColor={'black'} 
               />
               <FormErrorMessage>{doNotMatchError}</FormErrorMessage>
             </FormControl>
-            <Button type="submit" isLoading={isLoading}>
+            <Button type="submit" isLoading={isLoading} backgroundImage="null" variant="solid" textColor="black" backgroundColor="gray.300">
               Register
             </Button>
           </Stack>
