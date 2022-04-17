@@ -129,3 +129,20 @@ func Test_Post_GetPostbyID(t *testing.T) {
 	r.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusOK, w.Code, "Test passed - Get post by id")
 }
+func Test_Comment_CreateComment(t *testing.T) {
+	testPost := &database.Comment{
+		CommentId:       1,
+		ParentCommentId: 1,
+		UserId:          1,
+		PostId:          1,
+
+		Content: "contnr",
+	}
+	userformValue, _ := json.Marshal(testPost)
+	r := rtr.SetRouter()
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodPost, "/api/comment/create", bytes.NewBuffer(userformValue))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusOK, w.Code, "Test passed - Creation")
+}
