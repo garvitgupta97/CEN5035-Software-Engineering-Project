@@ -7,7 +7,7 @@ const ThemedBox = ({ light = 'blue.500', dark = 'gray.500', children, ...rest })
   return (
     <Box
     backgroundImage = {colorMode === 'light' ? `url(${sky})` : `url(${darkbc})`}
-      backgroundColor={ colorMode === 'light' ? light : dark}
+    backgroundColor={ colorMode === 'light' ? light : dark}
 
      
       {...rest}
