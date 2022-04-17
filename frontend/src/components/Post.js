@@ -20,6 +20,7 @@ import DeleteButton from './DeleteButton';
 import ChakraMarkdown from './ChakraMarkdown';
 import { userSelector } from '../selectors';
 
+
 const Post = ({
   id,
   type,
@@ -33,8 +34,13 @@ const Post = ({
   user,
 }) => {
   const { colorMode } = useColorMode();
-  const postDetailColor = 'gray.500';
-  const postDetailBgColor = colorMode === 'light' ? 'gray.100' : 'gray.600';
+  
+  // post font color
+  const postDetailColor = 'black';
+  
+  // button on post color
+  const postDetailBgColor = colorMode === 'light' ? 'gray.200' : 'gray.600'; 
+  
 
   const [isEditing, setIsEditing] = useState(false);
   const deletedText = '[deleted]';
@@ -43,8 +49,9 @@ const Post = ({
       p={4}
       borderRadius="md"
       width="100%"
-      light="gray.50"
-      dark="gray.700"
+      light="gray.100"
+      dark="gray.400"
+      backgroundImage="null"
     >
       <Flex>
         <UpvoteBar
@@ -52,12 +59,13 @@ const Post = ({
           numVotes={numVotes}
           id={id}
           voteValue={hasVoted}
+          color="black"
         />
         <Box flexGrow={1}>
           <Text as="span" color={postDetailColor}>
             {`Posted by `}
           </Text>
-          <Text as="span">{author ? `u/${author}` : deletedText}</Text>
+          <Text as="span" color={postDetailColor}>{author ? `u/${author}` : deletedText}</Text>
           <Text as="span" color={postDetailColor}>
             {' '}
             <Tooltip label={moment(createdAt).format('LLLL')}>
@@ -71,19 +79,21 @@ const Post = ({
             mb={4}
             fontSize="1.5em"
             fontWeight="500"
+            color={postDetailColor}
           >
             {title || deletedText}
           </Heading>
           {isEditing ? (
               <EditBox
-                type="post"
+                
+              type="post"
                 id={id}
                 initialText={body}
                 onClose={() => setIsEditing(false)}
               />
             ) : (
-              <Box listStylePosition="inside">
-                <ChakraMarkdown>{body}</ChakraMarkdown>
+              <Box listStylePosition="inside" color={postDetailColor}>
+                <ChakraMarkdown >{body}</ChakraMarkdown>
               </Box>
             )
           }
@@ -111,6 +121,7 @@ const Post = ({
               <IconButton
                 onClick={() => setIsEditing(true)}
                 backgroundColor="inherit"
+                
                 icon={<EditIcon />}
               />
             )}

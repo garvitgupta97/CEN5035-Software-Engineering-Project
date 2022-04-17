@@ -58,7 +58,8 @@ class RegisterPage extends React.Component {
     const { username, password, confirmPassword, doNotMatchError } = this.state;
     const { isLoading, error } = this.props;
     return (
-      <Box w={300} m="auto">
+      // borders of edit boxes
+      <Box w={300} mt={10} ml='auto' mr='auto' >
         {error && (
           <Alert status="error" mb={2}>
             <AlertIcon />
