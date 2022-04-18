@@ -37,12 +37,13 @@ func createComment(ctx *gin.Context) {
 		return
 	}
 	comment.UserEmail = ctx.Request.Header["Authorization"][0]
-	if !database.CreateComment(*comment) {
+	dbObj := database.CreateComment(*comment)
+	if dbObj == nil {
 
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Comment Failed": "DB Error"})
 		return
 	}
-	ctx.JSON(http.StatusOK, comment)
+	ctx.JSON(http.StatusOK, dbObj)
 }
 
 func getCommentsByPosts(ctx *gin.Context) {
