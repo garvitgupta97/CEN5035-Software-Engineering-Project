@@ -19,8 +19,8 @@ export const startLogin = (username, password) => async (dispatch) => {
       "Email":username,
       "Password":password,
     });
-    const { token, _ } = response.data;
-    dispatch(login(username, "123"));
+    const { token, user } = {token: response.data.jwt,user:{username:username}};
+    dispatch(login(user, token));
     dispatch({ type: 'LOGIN_SUCCESS' });
   } catch (e) {
     dispatch({
@@ -34,7 +34,6 @@ export const startLogin = (username, password) => async (dispatch) => {
 export const startLogout = () => async (dispatch, getState) => {
   try {
     dispatch({ type: 'LOGOUT_REQUEST' });
-    // await axios.post('/users/logout');
     dispatch(logout());
     dispatch(editPost(1, { has_voted: null }));
     dispatch(
@@ -70,8 +69,8 @@ export const startRegister = (username, password) => async (dispatch) => {
       "Email":username,
       "Password":password
     });
-    const { token , _ } = response.data;
-    dispatch(login(username, "123"));
+    const { token, user } = {token: response.data.jwt,user:{username:username}};
+    dispatch(login(user, token));
     dispatch({ type: 'REGISTER_SUCCESS' });
   } catch (e) {
     dispatch({
