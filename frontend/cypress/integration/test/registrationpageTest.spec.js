@@ -47,24 +47,27 @@ it('Launching', () => {
 
     // Register working
     cy.findByRole('button', { name: /Register/i }).click();
-    cy.log('Register present and working')
+   
 
     cy.contains('500')
     .should('be.visible')
     cy.log('500 for existing user')
 
     // creating new user
-    // cy.get('input[id="username-input"]')
-    // .clear()
-    // .type('testuser3@gmail.com');
+    cy.get('input[id="username-input"]')
+    .clear()
+    .type('testuser.420@gmail.com');
     
-    // cy.get('input[id="password-input"]')
-    // .clear()
-    // .type('testuser3');
+    cy.get('input[id="password-input"]')
+    .clear()
+    .type('testuser420');
 
-    // cy.get('input[id="confirm-password-input"]')
-    // .clear()
-    // .type('testuser3');
+    cy.get('input[id="confirm-password-input"]')
+    .clear()
+    .type('testuser420');
    
+    // Register working
+    cy.findByRole('button', { name: /Register/i }).click();
+    cy.log('Register present and working')
  
   })
