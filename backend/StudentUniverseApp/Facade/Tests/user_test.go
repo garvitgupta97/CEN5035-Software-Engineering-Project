@@ -108,8 +108,8 @@ func Test_Post_CreatePost(t *testing.T) {
 	assert.Equal(t, http.StatusOK, w.Code, "Test passed - Creation")
 }
 
-func Test_Post_GetAllPosts(t *testing.T){
-	testPost := &database.GetAllPosts()[]
+func Test_Post_GetAllPosts(t *testing.T) {
+	testPost := database.GetAllPosts()
 	userformValue, _ := json.Marshal(testPost)
 	r := rtr.SetRouter()
 	w := httptest.NewRecorder()
