@@ -132,15 +132,13 @@ func InitializeDatabase() *gorm.DB {
 		db.CreateTable(&PostVotes{})
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&PostVotes{})
 	}
+
+	//db.Exec("DROP TABLE comments")
+
 	if !db.HasTable(&Comment{}) {
 		db.CreateTable(&Comment{})
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Comment{})
 	}
-
-	// if !db.HasTable(&Comment{}) {
-	db.CreateTable(&Comment{})
-	db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Comment{})
-	// }
 
 	return db
 }
@@ -232,7 +230,7 @@ func CreatePost(post Post) bool {
 func CreateComment(comment Comment) bool {
 	db := InitializeDatabase()
 	defer db.Close()
-	//fmt.Println(db.Create(&post).Error)
+	fmt.Println(comment)
 	return db.Create(&comment).Error == nil
 }
 

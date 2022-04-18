@@ -38,7 +38,8 @@ func createComment(ctx *gin.Context) {
 	}
 	comment.UserEmail = ctx.Request.Header["Authorization"][0]
 	if !database.CreateComment(*comment) {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Comment Failed": "Error"})
+
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Comment Failed": "DB Error"})
 		return
 	}
 	ctx.JSON(http.StatusOK, comment)
