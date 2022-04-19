@@ -69,27 +69,26 @@ const CommentsPage = ({
       </Alert>
     );
   }
+  console.log(post)
   const {
-    id: post_id,
-    type,
-    subreddit_name,
-    author_name,
+    PostId,
+    author,
     created_at,
     title,
     body,
     votes,
     has_voted,
   } = post;
+  console.log(post)
   const numComments = comments.filter(({ body }) => body !== null).length;
 
   const rootComments = getCommentsWithChildren(comments);
   return (
     <Box>
       <Post
-        id={post_id}
-        type={type}
-        subreddit={subreddit_name}
-        author={author_name}
+        PostId={PostId}
+        type={'text'}
+        author={author}
         createdAt={created_at}
         title={title}
         body={body}
@@ -106,7 +105,7 @@ const CommentsPage = ({
             </Text>
             <Text as="span">{user.username}</Text>
           </Box>
-          <WriteCommentBox postId={post_id} parentCommentId={null} />
+          <WriteCommentBox postId={PostId} parentCommentId={null} />
         </Box>
       ) : (
         <Flex

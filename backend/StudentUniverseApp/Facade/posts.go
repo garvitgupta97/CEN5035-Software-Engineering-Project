@@ -13,6 +13,11 @@ import (
 	log "github.com/rs/zerolog/log"
 )
 
+type PostVotesDTO struct {
+	user_id string
+	post_id int
+}
+
 func createPost(ctx *gin.Context) {
 	post := new(database.Post)
 
@@ -62,4 +67,37 @@ func getPostById(ctx *gin.Context) {
 func getAllPosts(ctx *gin.Context) {
 	postList := database.GetAllPosts()
 	ctx.JSON(http.StatusOK, postList)
+}
+
+func addPostVote(ctx *gin.Context) {
+	if ctx.Request.Header["Authorization"] == nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
+		return
+	}
+
+	postVotesData := new(database.PostVotes)
+	if err := ctx.Bind(postVotesData); err != nil {
+
+		var verr validator.ValidationErrors
+		if errors.As(err, &verr) {
+			ctx.JSON(http.StatusBadRequest, gin.H{"errors": SimpleErrorMsg(verr)})
+			return
+		}
+
+		log.Info().Err(err).Msg("unable to bind")
+
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Post Fail": err.Error()})
+		return
+	}
+	postVotesData.UserEmail = ctx.Request.Header["Authorization"][0]
+	if !database.AddPostVote(*postVotesData) {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"user_id":    postVotesData.UserEmail,
+		"post_id":    postVotesData.PostId,
+		"vote_value": postVotesData.VoteValue,
+	})
+
 }

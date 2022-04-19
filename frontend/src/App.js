@@ -23,7 +23,7 @@ function App() {
           <Flex justifyContent="center">
             <Box width={['95%', '80%', '70%', '60%']} mb={10}>
               <Switch>
-                <Route path="/r/:subreddit/comments/:id">
+                <Route path="/comments/:id">
                   <CommentsPage />
                 </Route>
                 <PublicRoute path="/login">

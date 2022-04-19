@@ -65,7 +65,7 @@ const Post = ({
           <Text as="span" color={postDetailColor}>
             {`Posted by `}
           </Text>
-          <Text as="span" color={postDetailColor}>{author ? `u/${author}` : deletedText}</Text>
+          <Text as="span">{author ? `${author}` : deletedText}</Text>
           <Text as="span" color={postDetailColor}>
             {' '}
             <Tooltip label={moment(createdAt).format('LLLL')}>
@@ -104,8 +104,8 @@ const Post = ({
             fontWeight="bold"
           >
             <Box
-              // as={Link}
-              // to={`/r/${subreddit}/comments/${id}`}
+              as={Link}
+              to={`/comments/${id}`}
               p={2}
               borderRadius="sm"
               _hover={{ backgroundColor: postDetailBgColor }}

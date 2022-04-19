@@ -100,10 +100,13 @@ export const submitVote = ({ type, id, voteValue, newNumVotes }) => async (
     });
 
     try {
-      await axios.post(`/votes/post`, {
-        item_id: id,
-        vote_value: voteValue,
+      const json = JSON.stringify({ PostId: id, VoteValue: voteValue });
+      await axios.post(`api/post/addPostVote`, json, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
+
     } catch (e) {
       changePostVotes({
         has_voted: originalVoteValue,

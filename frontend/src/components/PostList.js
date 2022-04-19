@@ -44,7 +44,7 @@ const PostList = ({ isLoading, error, postList, getPostList }) => {
             Title,
             Content,
             Votes,
-            hasVoted,
+            hasVoted = 0,
             CommentsCount,
             Email,
             PostCreatedTime
