@@ -72,6 +72,16 @@ type AllPosts struct {
 	Email         string
 }
 
+type AllComments struct {
+	CommentId int
+	UserId    int
+	PostId    int
+	Content   string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Email     string
+}
+
 func InitializeDatabase() *gorm.DB {
 	// Openning file
 	db, err := gorm.Open("sqlite3", "./data.db")
@@ -185,6 +195,13 @@ func CreatePost(post Post) bool {
 	return db.Create(&post).Error == nil
 }
 
+func CreateComment(comment Comment) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	//fmt.Println(db.Create(&post).Error)
+	return db.Create(&comment).Error == nil
+}
+
 func GetAllPosts() []AllPosts {
 	//var allPosts Post
 
@@ -195,4 +212,14 @@ func GetAllPosts() []AllPosts {
 	//db.Model(&allPosts).Preload("Users").Find(&allPosts)
 	db.Table("posts").Select("posts.*, users.email").Joins("inner join users on posts.user_id = users.id").Find(&allPosts)
 	return allPosts
+}
+
+func GetCommentsByPosts(postId int) []AllComments {
+
+	var allComments []AllComments
+	db := InitializeDatabase()
+	defer db.Close()
+	//db.Model(&allPosts).Preload("Users").Find(&allPosts)
+	db.Table("comments").Where("post_id = ?", postId).Select("comments.*, users.email").Joins("inner join users on comments.user_id = users.id").Find(&allComments)
+	return allComments
 }
