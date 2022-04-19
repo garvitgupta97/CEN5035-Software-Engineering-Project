@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Box } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Heading,
@@ -20,6 +21,7 @@ import {
 } from '../selectors';
 import { startLogout } from '../actions/auth';
 import LoginAndRegisterButtons from './LoginAndRegisterButtons';
+import {Logo} from '../Logo'
 
 const Navbar = ({
   user,
@@ -30,24 +32,26 @@ const Navbar = ({
   const location = useLocation();
 
   return (
-    <ThemedBox
+    <Box
       py={2}
       px={[0, 0, 10, 10]}
       display="flex"
       justifyContent="flex-start"
       alignItems="center"
-      mb={7}
+      
+      // mb={7}
     >
-      <Heading
-        ml={[2, 4]}
-        display={user ? 'block' : ['none', 'block']}
-        fontSize={['1.3rem', '2.25rem']}
-        mr={[2, 4]}
-      >
-        StUni
-      </Heading>
-
+        {/* <Heading
+          ml={[2, 4]}
+          display={user ? 'block' : ['none', 'block']}
+          fontSize={['1.3rem', '2.25rem']}
+          mr={[2, 4]}
+        >
+          StudentUniverse
+        </Heading> */}
+      <Logo  />
       <HStack>
+      
         <Button display={['none', 'flex']} as={Link} to="/">
           Home
         </Button>
@@ -82,7 +86,7 @@ const Navbar = ({
         <LoginAndRegisterButtons />
       )}
       <ColorModeSwitcher />
-    </ThemedBox>
+    </Box>
   );
 };
 

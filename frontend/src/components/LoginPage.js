@@ -42,7 +42,8 @@ class LoginPage extends React.Component {
     const requireAuth =
       location && location.state && location.state.requireAuth;
     return (
-      <Box w={300} m="auto">
+      // borders of edit boxes
+      <Box w={300} mt={10} ml='auto' mr='auto' >
         {requireAuth && (
           <Alert status="warning" mb={2}>
             <AlertIcon />
@@ -56,7 +57,7 @@ class LoginPage extends React.Component {
           </Alert>
         )}
         <form onSubmit={this.handleSubmit}>
-          <Stack spacing={3}>
+          <Stack spacing={3} >
             <FormControl>
               <Input
                 value={username}
@@ -67,21 +68,29 @@ class LoginPage extends React.Component {
                 placeholder="username"
                 size="md"
                 isRequired
+                backgroundImage="null"
+                
+                backgroundColor="gray.800"
+                textColor={'black'}
               />
             </FormControl>
-            <FormControl>
+            <FormControl >
               <Input
                 value={password}
                 onChange={(e) => this.setState({ password: e.target.value })}
                 id="password-input"
                 variant="filled"
-                type="password"
+                type="password"                
                 placeholder="password"
                 size="md"
                 isRequired
+                backgroundImage="null"
+                backgroundColor="gray.800"
+                
+                textColor={'black'}
               />
             </FormControl>
-            <Button type="submit" isLoading={isLoading || null}>
+            <Button type="submit" isLoading={isLoading || null} mt = {15} backgroundImage="null" variant="solid" textColor="black" backgroundColor="gray.300">
               Login
             </Button>
           </Stack>
