@@ -3,6 +3,8 @@ package server
 import (
 	//store "StudentUniverse/StudentUniverseApp/Facade/DTO"
 	"errors"
+	"fmt"
+	"strconv"
 
 	database "StudentUniverse/StudentUniverseApp/Facade/Database"
 
@@ -53,4 +55,33 @@ func getCommentsByPosts(ctx *gin.Context) {
 	allComments := database.GetCommentsByPosts(comment.PostId)
 
 	ctx.JSON(http.StatusOK, allComments)
+}
+
+func getCommentByPostId(ctx *gin.Context) {
+	queryParams := ctx.Request.URL.Query()
+
+	if queryParams.Get("id") == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"Error": "Post not found"})
+		return
+	}
+
+	id, err := strconv.Atoi(queryParams.Get("id"))
+
+	if err == nil {
+		fmt.Println()
+		fullPost := database.GetPostById(id)
+		fmt.Println(fullPost)
+
+		if (fullPost.PostId) == 0 {
+			ctx.JSON(http.StatusBadRequest, gin.H{"Error": "Post not found"})
+			return
+		}
+		response := new(database.CommentPost)
+		response.Post = fullPost
+		response.Comment = []int{}
+		ctx.JSON(http.StatusOK, response)
+		return
+	}
+	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Request Failed": ""})
+
 }

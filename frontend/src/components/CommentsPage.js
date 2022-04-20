@@ -72,11 +72,11 @@ const CommentsPage = ({
   console.log(post)
   const {
     PostId,
-    author,
-    created_at,
-    title,
-    body,
-    votes,
+    UserId,
+    CreatedAt,
+    Title,
+    Content,
+    Votes,
     has_voted,
   } = post;
   console.log(post)
@@ -86,14 +86,14 @@ const CommentsPage = ({
   return (
     <Box>
       <Post
-        PostId={PostId}
+        id={PostId}
         type={'text'}
-        author={author}
-        createdAt={created_at}
-        title={title}
-        body={body}
+        author={UserId}
+        createdAt={CreatedAt}
+        title={Title}
+        body={Content}
         numComments={numComments}
-        numVotes={votes}
+        numVotes={Votes}
         hasVoted={has_voted}
       />
       <br />
