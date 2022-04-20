@@ -118,3 +118,14 @@ func Test_Post_GetAllPosts(t *testing.T) {
 	r.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusOK, w.Code, "Test passed - Get all posts")
 }
+
+func Test_Post_GetPostbyID(t *testing.T) {
+	testPost := database.GetPostById(1)
+	userformValue, _ := json.Marshal(testPost)
+	r := rtr.SetRouter()
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(http.MethodPost, "/api/post/1", bytes.NewBuffer(userformValue))
+	req.Header.Set("Content-Type", "application/json")
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusOK, w.Code, "Test passed - Get post by id")
+}
