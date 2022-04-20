@@ -40,6 +40,12 @@ it('Launching', () => {
 
     cy.get('#menu-list-6-menuitem-4').click();
 
-   
+    cy.contains('Login')
+    .should('be.visible')
+  cy.get('.d-inline-block')
+    .should('be.visible')
+  cy.contains('Register')
+    .should('be.visible')
+ 
 
   })
