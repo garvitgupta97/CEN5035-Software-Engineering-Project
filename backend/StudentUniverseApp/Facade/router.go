@@ -43,6 +43,7 @@ func SetRouter() *gin.Engine {
 		//api.POST("/post/{id}/upvote", createComment)
 		//api.DELETE("/post/{id}/downvote", deleteComment)
 		api.POST("/post/addPostVote", addPostVote)
+		api.GET("/comments", getCommentByPostId)
 	}
 
 	router.NoRoute(func(ctx *gin.Context) { ctx.JSON(http.StatusNotFound, gin.H{}) })

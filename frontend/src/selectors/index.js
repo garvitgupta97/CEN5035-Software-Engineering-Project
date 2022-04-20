@@ -39,4 +39,4 @@ export const userSelector = (state) => state.auth.user;
 
 export const tokenSelector = (state) => state.auth.token;
 
-export const subredditsSelector = (state) => state.subreddits;
+// export const subredditsSelector = (state) => state.subreddits;

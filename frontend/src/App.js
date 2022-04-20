@@ -35,9 +35,6 @@ function App() {
                 <PrivateRoute path="/submit">
                   <CreatePostPage />
                 </PrivateRoute>
-                <Route path="/r/:subreddit">
-                  <PostList />
-                </Route>
                 <Route path="/">
                   <PostList />
                 </Route>

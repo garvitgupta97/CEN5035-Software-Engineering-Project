@@ -91,7 +91,7 @@ const Navbar = ({
 };
 
 const { loadingSelector, errorSelector } = createLoadingAndErrorSelector([
-  'GET_SUBREDDITS',
+  
 ]);
 
 const mapStateToProps = (state) => ({

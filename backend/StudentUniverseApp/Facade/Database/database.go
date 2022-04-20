@@ -65,6 +65,11 @@ type Comment struct {
 	UpdatedAt time.Time `gorm:"not null column:updated_at;"`
 }
 
+type CommentPost struct {
+	Post    Post
+	Comment []int
+}
+
 type AllPosts struct {
 	PostId        int
 	UserId        int
@@ -195,7 +200,7 @@ func GetPostById(postId int) Post {
 	post := new(Post)
 	db := InitializeDatabase()
 	defer db.Close()
-	db.Model(&post).Where("PostId = ?", postId).First(&post)
+	db.Model(&post).Where("post_id = ?", postId).First(&post)
 	fmt.Print(postId, *post)
 	return *post
 }
