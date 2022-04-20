@@ -35,8 +35,4 @@ it('Launching', () => {
     cy.findByRole('button', { name: /Login/i }).click();
 
 
-    cy.contains('StUni')
-      .should('be.visible')
-    cy.contains('Home')
-      .should('be.visible')
   })

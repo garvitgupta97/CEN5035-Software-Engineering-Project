@@ -18,8 +18,10 @@ it('Launching', () => {
     cy.visit('http://localhost:3000/')
 
 
-    cy.contains('StUni')
+    cy.contains('Submit')
       .should('be.visible')
     cy.contains('Home')
+      .should('be.visible')
+      cy.contains('.d-inline-block')
       .should('be.visible')
   })
