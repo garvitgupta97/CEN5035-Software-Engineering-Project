@@ -46,6 +46,11 @@ it('Launching', () => {
     .should('be.visible')
   cy.contains('Register')
     .should('be.visible')
+
+    cy.contains('Home')
+      .should('be.visible')
+    cy.get('.css-a2c8bh > svg > path')
+      .should('be.visible')
  
 
   })
