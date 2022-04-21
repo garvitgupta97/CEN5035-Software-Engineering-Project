@@ -132,6 +132,10 @@ func InitializeDatabase() *gorm.DB {
 		db.CreateTable(&PostVotes{})
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&PostVotes{})
 	}
+	if !db.HasTable(&Comment{}) {
+		db.CreateTable(&Comment{})
+		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Comment{})
+	}
 
 	// if !db.HasTable(&Comment{}) {
 	db.CreateTable(&Comment{})
@@ -244,6 +248,16 @@ func GetAllPosts() []AllPosts {
 	return allPosts
 }
 
+func GetAllComments() []AllComments {
+
+	var allComments []AllComments
+	db := InitializeDatabase()
+	defer db.Close()
+
+	db.Table("comments").Select("comments.*, users.email").Joins("inner join users on comments.user_id = users.id").Find(&allComments)
+	return allComments
+}
+
 func GetCommentsByPosts(postId int) []AllComments {
 
 	var allComments []AllComments
@@ -273,12 +287,12 @@ func DeleteComment(comment Comment) bool {
 	defer db.Close()
 	//fmt.Println(db.Create(&post).Error)
 
-	return db.Where("comment_id = ?", comment.CommentId).Delete(&comment).Error == nil
+	return db.Where("comment_id = ?", comment.CommentId).Delete(&comment).RowsAffected == 1
 }
 
 func DeletePost(post Post) bool {
 	db := InitializeDatabase()
 	defer db.Close()
 	//fmt.Println(db.Create(&post).Error)
-	return db.Where("post_id = ?", post.PostId).Delete(&post).Error == nil
+	return db.Where("post_id = ?", post.PostId).Delete(&post).RowsAffected == 1
 }

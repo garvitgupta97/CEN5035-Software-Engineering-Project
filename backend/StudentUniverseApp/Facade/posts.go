@@ -103,10 +103,10 @@ func addPostVote(ctx *gin.Context) {
 }
 
 func deletePost(ctx *gin.Context) {
-	if ctx.Request.Header["Authorization"] == nil {
-		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
-		return
-	}
+	// if ctx.Request.Header["Authorization"] == nil {
+	// 	ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post deletion Failure": "Auth Error"})
+	// 	return
+	// }
 
 	postData := new(database.Post)
 	if err := ctx.Bind(postData); err != nil {
