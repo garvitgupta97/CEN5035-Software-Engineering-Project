@@ -27,9 +27,10 @@ const getCommentsWithChildren = (comments) => {
     ...comment,
     children: [],
   }));
+
   commentsWithChildren.forEach((childComment) => {
     const { parent_comment_id } = childComment;
-    if (parent_comment_id) {
+    if (parent_comment_id && parent_comment_id != -1) {
       const parent = commentsWithChildren.find(
         (comment) => parent_comment_id === comment.id
       );
@@ -38,7 +39,7 @@ const getCommentsWithChildren = (comments) => {
   });
   return commentsWithChildren.filter(
     ({ parent_comment_id, body, children }) =>
-      parent_comment_id === null && (body !== null || children.length > 0)
+      parent_comment_id == -1 && (body !== null || children.length > 0)
   );
 };
 

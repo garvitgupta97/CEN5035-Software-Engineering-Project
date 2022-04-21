@@ -54,13 +54,13 @@ const Post = ({
       backgroundImage="null"
     >
       <Flex>
-        <UpvoteBar
+        {/* <UpvoteBar
           type="post"
           numVotes={numVotes}
           id={id}
           voteValue={hasVoted}
           color="black"
-        />
+        /> */}
         <Box flexGrow={1}>
           <Text as="span" color={postDetailColor}>
             {`Posted by `}

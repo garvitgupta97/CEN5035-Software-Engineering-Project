@@ -48,13 +48,13 @@ const Comment = ({
       dark="gray.700"
     >
       <Flex>
-        <UpvoteBar
+        {/* <UpvoteBar
           type="comment"
           size={5}
           id={id}
           numVotes={numVotes}
           voteValue={hasVoted}
-        />
+        /> */}
         <Box flexGrow={1}>
           <Text as="span" isTruncated>
             {author === null ? deletedText : author}

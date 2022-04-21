@@ -22,9 +22,9 @@ export const submitComment = (commentDetails) => async (dispatch, getState) => {
     const { body, post_id, parent_comment_id } = commentDetails;
     dispatch({ type: 'SUBMIT_COMMENT_REQUEST' });
     const response = await axios.post('/api/comment/create', {
-      Content:body,
-      PostId:post_id,
-      ParentCommentId:parent_comment_id,
+      body:body,
+      post_id:post_id,
+      parent_comment_id:parent_comment_id,
     });
     const comments = commentsSelector(getState());
     dispatch(setComments([response.data].concat(comments)));

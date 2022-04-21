@@ -37,6 +37,7 @@ func createComment(ctx *gin.Context) {
 		return
 	}
 	comment.UserEmail = ctx.Request.Header["Authorization"][0]
+	database.UpdateCount(comment.PostId)
 	dbObj := database.CreateComment(*comment)
 	if dbObj == nil {
 

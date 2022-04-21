@@ -72,6 +72,7 @@ type Comment struct {
 	Content         string    `gorm:"column:content" json:"body"`
 	CreatedAt       time.Time `gorm:"not null column:created_at;" json:"created_at"`
 	UpdatedAt       time.Time `gorm:"not null column:updated_at;" json:"updated_at"`
+	HasVoted        int       `gorm:"column:has_voted" json:"has_voted"`
 }
 
 type CommentPost struct {
@@ -299,4 +300,10 @@ func DeletePost(post Post) bool {
 	defer db.Close()
 	//fmt.Println(db.Create(&post).Error)
 	return db.Where("post_id = ?", post.PostId).Delete(&post).RowsAffected == 1
+}
+
+func UpdateCount(postId int) bool {
+	db := InitializeDatabase()
+	defer db.Close()
+	return (db.Model(&Post{}).Where("post_id = ?", postId).UpdateColumn("comments_count", gorm.Expr("comments_count + ?", 1)).RowsAffected != 0)
 }
