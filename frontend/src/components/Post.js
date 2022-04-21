@@ -115,7 +115,8 @@ const Post = ({
             </Box>
           </Flex>
         </Box>
-        {user && user.username === author && (
+        
+        {user && user.username == author && (
           <HStack alignItems="flex-start">
             {!isEditing && (
               <IconButton
