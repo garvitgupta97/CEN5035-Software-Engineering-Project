@@ -39,6 +39,7 @@ type Thread struct {
 type Post struct {
 	PostId        int       `gorm:"column:post_id; primary_key; AUTO_INCREMENT"`
 	UserId        int       `gorm:"column:user_id"`
+	UserEmail     string    `gorm:"column:user_email"`
 	ThreadId      int       `gorm:"column:thread_id"`
 	Title         string    `gorm:"column:title"`
 	Content       string    `gorm:"column:content"`
@@ -140,6 +141,11 @@ func InitializeDatabase() *gorm.DB {
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Comment{})
 	}
 
+	if !db.HasTable(&Comment{}) {
+		db.CreateTable(&Comment{})
+		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Comment{})
+	}
+
 	return db
 }
 
@@ -234,15 +240,15 @@ func CreateComment(comment Comment) interface{} {
 	return db.Create(&comment).Value
 }
 
-func GetAllPosts() []AllPosts {
+func GetAllPosts() []Post {
 	//var allPosts Post
 
 	//allPosts := AllPosts{}
-	var allPosts []AllPosts
+	var allPosts []Post
 	db := InitializeDatabase()
 	defer db.Close()
 	//db.Model(&allPosts).Preload("Users").Find(&allPosts)
-	db.Table("posts").Select("posts.*, users.email").Joins("inner join users on posts.user_id = users.id").Find(&allPosts)
+	db.Table("posts").Find(&allPosts).Order("created_at desc")
 	return allPosts
 }
 

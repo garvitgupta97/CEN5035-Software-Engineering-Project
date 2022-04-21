@@ -89,7 +89,7 @@ export const submitVote = ({ type, id, voteValue, newNumVotes }) => async (
     const changePostVotes = ({ has_voted, votes }) => {
       const newPostDetails = { has_voted, votes };
       const { has_voted: originalVoteValue, votes: originalNumVotes } =
-        postListSelector(getState()).find((post) => post.id === id) ||
+        postListSelector(getState()).find((post) => post.PostId === id) ||
         postSelector(getState());
       dispatch(editPost(id, newPostDetails));
       return { originalVoteValue, originalNumVotes };

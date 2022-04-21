@@ -3,6 +3,7 @@ package server
 import (
 	//store "StudentUniverse/StudentUniverseApp/Facade/DTO"
 	"errors"
+	"fmt"
 
 	database "StudentUniverse/StudentUniverseApp/Facade/Database"
 
@@ -14,6 +15,12 @@ import (
 )
 
 func createPost(ctx *gin.Context) {
+
+	if ctx.Request.Header["Authorization"] == nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
+		return
+	}
+
 	post := new(database.Post)
 
 	if err := ctx.Bind(post); err != nil {
@@ -29,6 +36,10 @@ func createPost(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Post Fail": err.Error()})
 		return
 	}
+
+	post.UserEmail = ctx.Request.Header["Authorization"][0]
+	fmt.Println(post)
+
 	if !database.CreatePost(*post) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
 		return

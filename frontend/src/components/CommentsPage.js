@@ -69,9 +69,8 @@ const CommentsPage = ({
       </Alert>
     );
   }
-  console.log(post)
   const {
-    id: PostId,
+    PostId,
     UserId,
     CreatedAt,
     Title,
@@ -79,7 +78,6 @@ const CommentsPage = ({
     Votes,
     has_voted,
   } = post;
-  console.log(post)
   const numComments = comments.filter(({ body }) => body !== null).length;
 
   const rootComments = getCommentsWithChildren(comments);
