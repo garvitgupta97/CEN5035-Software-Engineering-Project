@@ -47,14 +47,14 @@ const PostList = ({ isLoading, error, postList, getPostList }) => {
             hasVoted = 0,
             CommentsCount,
             Email,
-            PostCreatedTime
+            CreatedAt
           }) => (
             <Box key={`${PostId}-${Title}`} my={4}>
               <Post
                 id={PostId}
                 type={'text'}
                 author={Email}
-                createdAt={PostCreatedTime}
+                createdAt={CreatedAt}
                 title={Title}
                 body={Content}
                 numComments={CommentsCount}
