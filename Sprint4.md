@@ -102,3 +102,8 @@ A social media platform for students to collaborate and help each other by shari
 ### API to add post votes
 - [api/post/addPostvote](api/post/addPostVote/)
 ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/documentation/Resources/addPostVote.png)
+
+### API to add fetch post by Post ID
+- [api/post/getById](api/post/getById/)
+![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/documentation/Resources/getById.png)
+
