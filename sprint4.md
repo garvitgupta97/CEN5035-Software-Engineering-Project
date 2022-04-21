@@ -1,4 +1,4 @@
-# Sprint 4
+# Sprint 3
 
 ## Project - Overview
 
@@ -17,8 +17,8 @@ A social media platform for students to collaborate and help each other by shari
 - Changed frontend layout
 
 ## Backend Tasks achieved - (Go)
-- Created comment API
-- Created get all coomets, upvotes api 
+- Created Post API
+- Created get all posts api 
 - Added unit tests for various apis
 
 ## Demo of the app
@@ -94,3 +94,9 @@ A social media platform for students to collaborate and help each other by shari
 ### API to create a fetch all posts
 - [api/getUsers/](api/post/allPosts/)
 ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/allPosts.png)
+
+
+### API to delete a post
+- [api/post/delete/](api/post/delete/)
+![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/be_userPostChanges/Resources/deletePost.png)
+
