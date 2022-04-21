@@ -95,6 +95,11 @@ A social media platform for students to collaborate and help each other by shari
 - [api/getUsers/](api/post/allPosts/)
 ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/allPosts.png)
 
-### API to create a fetch all posts
+### API to delete a post
 - [api/post/delete](api/post/delete/)
-![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/allPosts.png)
+![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/documentation/Resources/deletePost.png)
+
+### API to add post votes
+- [api/post/addPostvote](api/post/addPostVote/)
+![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/documentation/Resources/addPostVote.png)
+
