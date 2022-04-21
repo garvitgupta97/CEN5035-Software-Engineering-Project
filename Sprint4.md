@@ -109,6 +109,9 @@ A social media platform for students to collaborate and help each other by shari
 
 
 Demo
+After registering, the user lands up on the home page. The home page has an option to create a new post using the "Submit" button. The user is required to enter the post title and post content. This can be related to the user's current interview experience or list of companies that are accepting applications at the moment or any other information that the user wants to share with their network. Each post has an option for the user and their network to share their thoughts. It is required to be logged in before commenting.
+Out web app also gives user to choose a light or a dark theme, as per their convenience. 
+Once the user is finished using the application, he can simply log out before finishing the session to make sure their data remains secured.
 
 https://user-images.githubusercontent.com/91436598/164367771-4c247d5b-4e7a-4758-b752-1ce1a5df995e.mp4
 
