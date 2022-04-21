@@ -66,7 +66,7 @@ type CommentVotes struct {
 
 type Comment struct {
 	CommentId       int       `gorm:"column:comment_id; primary_key; AUTO_INCREMENT" json:"id"`
-	ParentCommentId int       `gorm:"column:parent_comment_id; default:null" json:"parent_comment_id"`
+	ParentCommentId int       `gorm:"column:parent_comment_id; default:-1" json:"parent_comment_id"`
 	UserEmail       string    `gorm:"column:user_email" json:"author_name"`
 	PostId          int       `gorm:"column:post_id" json:"post_id"`
 	Content         string    `gorm:"column:content" json:"body"`
