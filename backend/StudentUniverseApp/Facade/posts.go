@@ -41,6 +41,7 @@ func createPost(ctx *gin.Context) {
 	fmt.Println(post)
 
 	if !database.CreatePost(*post) {
+		fmt.Println("DBB")
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Post Fail": "Error"})
 		return
 	}

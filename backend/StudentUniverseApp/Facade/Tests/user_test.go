@@ -91,19 +91,17 @@ func Test_SignIn_SinginSuccess(t *testing.T) {
 
 func Test_Post_CreatePost(t *testing.T) {
 	testPost := &database.Post{
-		UserId:        1,
-		ThreadId:      1,
-		Title:         "title",
-		Content:       "contnr",
-		Votes:         2,
-		CommentsCount: 0,
-		ThreadTitle:   "thread",
+		UserId:  1,
+		Title:   "title",
+		Content: "contnr",
 	}
 	userformValue, _ := json.Marshal(testPost)
 	r := rtr.SetRouter()
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest(http.MethodPost, "/api/post/create", bytes.NewBuffer(userformValue))
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "testemail@email.com")
+	fmt.Println(req.Header)
 	r.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusOK, w.Code, "Test passed - Creation")
 }
