@@ -106,3 +106,11 @@ A social media platform for students to collaborate and help each other by shari
 ### API to add fetch post by Post ID
 - [api/post/getById](api/post/getById/)
 ![This is an image](https://github.com/garvitgupta97/CEN5035-Software-Engineering-Project/blob/main/Resources/getById.png)
+
+
+Demo
+
+https://user-images.githubusercontent.com/91436598/164367771-4c247d5b-4e7a-4758-b752-1ce1a5df995e.mp4
+
+
+
