@@ -132,15 +132,13 @@ func InitializeDatabase() *gorm.DB {
 		db.CreateTable(&PostVotes{})
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&PostVotes{})
 	}
+
+	//db.Exec("DROP TABLE comments")
+
 	if !db.HasTable(&Comment{}) {
 		db.CreateTable(&Comment{})
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Comment{})
 	}
-
-	// if !db.HasTable(&Comment{}) {
-	db.CreateTable(&Comment{})
-	db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Comment{})
-	// }
 
 	return db
 }
@@ -229,11 +227,11 @@ func CreatePost(post Post) bool {
 	return db.Create(&post).Error == nil
 }
 
-func CreateComment(comment Comment) bool {
+func CreateComment(comment Comment) interface{} {
 	db := InitializeDatabase()
 	defer db.Close()
-	//fmt.Println(db.Create(&post).Error)
-	return db.Create(&comment).Error == nil
+	//fmt.Println(comment)
+	return db.Create(&comment).Value
 }
 
 func GetAllPosts() []AllPosts {
@@ -248,23 +246,23 @@ func GetAllPosts() []AllPosts {
 	return allPosts
 }
 
-func GetAllComments() []AllComments {
+func GetAllComments() []Comment {
 
-	var allComments []AllComments
+	var allComments []Comment
 	db := InitializeDatabase()
 	defer db.Close()
 
-	db.Table("comments").Select("comments.*, users.email").Joins("inner join users on comments.user_id = users.id").Find(&allComments)
+	db.Table("comments").Find(&allComments)
 	return allComments
 }
 
-func GetCommentsByPosts(postId int) []AllComments {
+func GetCommentsByPosts(postId int) []Comment {
 
-	var allComments []AllComments
+	var allComments []Comment
 	db := InitializeDatabase()
 	defer db.Close()
 	//db.Model(&allPosts).Preload("Users").Find(&allPosts)
-	db.Table("comments").Where("post_id = ?", postId).Select("comments.*, users.email").Joins("inner join users on comments.user_id = users.id").Find(&allComments)
+	db.Table("comments").Where("post_id = ?", postId).Find(&allComments)
 	return allComments
 }
 

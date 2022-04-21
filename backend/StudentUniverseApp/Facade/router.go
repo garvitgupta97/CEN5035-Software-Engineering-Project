@@ -41,7 +41,7 @@ func SetRouter() *gin.Engine {
 		api.POST("/comment/allComments", getAllComments) //get
 		api.POST("/comment/create", createComment)
 		api.POST("/comment/getByPost", getCommentsByPosts)
-		api.DELETE("/comment/delete", deleteComment)
+		api.POST("/comment/delete", deleteComment)
 		api.POST("/comment/addCommentVote", addCommentVote)
 		api.GET("/comment", getCommentByPostId)
 	}
