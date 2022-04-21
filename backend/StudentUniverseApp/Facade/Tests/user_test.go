@@ -136,7 +136,7 @@ func Test_Comment_CreateComment(t *testing.T) {
 		UserId:          1,
 		PostId:          1,
 
-		Content: "contnr",
+		Content: "content",
 	}
 	userformValue, _ := json.Marshal(testPost)
 	r := rtr.SetRouter()
