@@ -1,7 +1,7 @@
 it('Launching', () => {
     cy.server()
 
-    cy.visit('http://localhost:3000/login')
+    cy.visit('http://localhost:3000/submit')
 
     cy.route({
       method: "GET",
@@ -36,21 +36,38 @@ it('Launching', () => {
     // cy.get('#menu-button-10').click();
 
     // cy.contains('testuser@gmail.com', 'Logout').click();
-    cy.findByRole('button', { name: /testuser@gmail.com/i }).click();
+    cy.findByRole('button', { name: /Submit/i }).click();
 
-    cy.get('#menu-list-6-menuitem-4').click();
 
-    cy.contains('Login')
+
+    cy.contains('Submit')
     .should('be.visible')
-  cy.get('.d-inline-block')
-    .should('be.visible')
-  cy.contains('Register')
-    .should('be.visible')     
 
-    cy.contains('Home')
-      .should('be.visible')
+    // chakra present and theme change working
     cy.get('.css-a2c8bh > svg > path')
-      .should('be.visible')
+    .should('be.visible') 
+    cy.log('chakra present')
+    cy.get('.css-a2c8bh > svg > path').click()
+    cy.log('dark chakra button working')
+    cy.log('theme changing')
+
+    cy.get('.css-1t0t7oo')
+    .should('be.visible')
+    cy.get('.css-1t0t7oo').click()
+    cy.log('light chakra button working')
+    cy.log('theme changing')
+
+
+        cy.get('#field-7')
+        .clear()
+        .type('Test Post');
+        
+        cy.get('#field-8')
+        .clear()
+        .type('Test Post Content');
+        cy.log('Post created')
+
+        cy.findByRole('button', { name: /Submit/i }).click();
  
 
   })
