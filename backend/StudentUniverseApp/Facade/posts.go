@@ -14,11 +14,6 @@ import (
 	log "github.com/rs/zerolog/log"
 )
 
-type PostVotesDTO struct {
-	user_id string
-	post_id int
-}
-
 func createPost(ctx *gin.Context) {
 
 	if ctx.Request.Header["Authorization"] == nil {
