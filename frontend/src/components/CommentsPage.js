@@ -72,6 +72,7 @@ const CommentsPage = ({
   const {
     PostId,
     UserId,
+    UserEmail,
     CreatedAt,
     Title,
     Content,
@@ -86,7 +87,7 @@ const CommentsPage = ({
       <Post
         id={PostId}
         type={'text'}
-        author={UserId}
+        author={UserEmail}
         createdAt={CreatedAt}
         title={Title}
         body={Content}

@@ -28,7 +28,7 @@ class WriteCommentBox extends React.Component {
     await submitComment({
       body,
       post_id: postId,
-      parent_comment_id: parentCommentId,
+      parent_comment_id: parentCommentId == null ? -1 : parentCommentId,
     });
     const { error } = this.props;
     this.setState({ body: '' });
