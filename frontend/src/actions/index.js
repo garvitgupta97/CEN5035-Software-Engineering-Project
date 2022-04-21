@@ -5,8 +5,9 @@ import { postListSelector, commentsSelector, postSelector } from '../selectors';
 
 export const getPostAndComments = (id) => async (dispatch) => {
   try {
+
     dispatch({ type: 'GET_POST_AND_COMMENTS_REQUEST' });
-    const response = await axios.get(`/api/comments?id=${id}`);
+    const response = await axios.get(`/api/comment?id=${id}`);
     dispatch(setPost(response.data.Post));
     dispatch(setComments(response.data.Comment));
     dispatch({ type: 'GET_POST_AND_COMMENTS_SUCCESS' });
