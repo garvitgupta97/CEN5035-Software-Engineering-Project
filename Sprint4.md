@@ -118,3 +118,7 @@ https://user-images.githubusercontent.com/91436598/164367771-4c247d5b-4e7a-4758-
 BE test cases
 https://user-images.githubusercontent.com/41354713/164369386-c14a897f-6956-47b2-8ad5-60b47530cfc1.mp4
 
+FE test cases
+https://user-images.githubusercontent.com/89991825/164369849-24125d7f-8cb8-45cc-857f-6e8d4bb70afd.mp4
+
+
