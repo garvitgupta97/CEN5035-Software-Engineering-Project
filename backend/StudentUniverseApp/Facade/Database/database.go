@@ -64,13 +64,13 @@ type CommentVotes struct {
 }
 
 type Comment struct {
-	CommentId       int       `gorm:"column:comment_id; primary_key; AUTO_INCREMENT"`
-	ParentCommentId int       `gorm:"column:parent_comment_id; primary_key; AUTO_INCREMENT"`
-	UserId          int       `gorm:"column:user_id"`
-	PostId          int       `gorm:"column:post_id"`
-	Content         string    `gorm:"column:content"`
-	CreatedAt       time.Time `gorm:"not null column:created_at;"`
-	UpdatedAt       time.Time `gorm:"not null column:updated_at;"`
+	CommentId       int       `gorm:"column:comment_id; primary_key; AUTO_INCREMENT" json:"id"`
+	ParentCommentId int       `gorm:"column:parent_comment_id; default:null" json:"parent_comment_id"`
+	UserEmail       string    `gorm:"column:user_email" json:"author_name"`
+	PostId          int       `gorm:"column:post_id" json:"post_id"`
+	Content         string    `gorm:"column:content" json:"body"`
+	CreatedAt       time.Time `gorm:"not null column:created_at;" json:"created_at"`
+	UpdatedAt       time.Time `gorm:"not null column:updated_at;" json:"updated_at"`
 }
 
 type CommentPost struct {
@@ -132,6 +132,11 @@ func InitializeDatabase() *gorm.DB {
 		db.CreateTable(&PostVotes{})
 		db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&PostVotes{})
 	}
+
+	// if !db.HasTable(&Comment{}) {
+	db.CreateTable(&Comment{})
+	db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Comment{})
+	// }
 
 	return db
 }
