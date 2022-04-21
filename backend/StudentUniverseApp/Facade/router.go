@@ -34,7 +34,7 @@ func SetRouter() *gin.Engine {
 		//api.POST("/feedPosts", getFeedPosts)//get
 		//api.POST("/post/myPosts", getMyPosts)//get
 		api.POST("/post/allPosts", getAllPosts) //get
-		api.POST("/post/{id}", getPostById)     // post
+		api.POST("/post/getById", getPostById)  // post
 		api.POST("/post/delete", deletePost)
 		api.POST("/post/addPostVote", addPostVote)
 
