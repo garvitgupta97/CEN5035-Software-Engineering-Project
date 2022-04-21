@@ -24,6 +24,7 @@ it('Launching', () => {
     });
 
 
+    // Login
     cy.get('input[id="username-input"]')
     .clear()
     .type('testuser@gmail.com');
@@ -33,11 +34,60 @@ it('Launching', () => {
     .type('testuser');
 
     cy.findByRole('button', { name: /Login/i }).click();
-      cy.contains('.d-inline-block')
+
+    cy.log('Logging in')
+
+
+    // Logo
+    cy.get('.d-inline-block')
       .should('be.visible')
-      cy.contains('Submit')
-      .should('be.visible')
+      cy.log('Logo present')
+
+    // Home 
     cy.contains('Home')
       .should('be.visible')
+      cy.log('Home button present')
+
+    
+
+     // chakra present and theme change working
+     cy.get('.css-a2c8bh > svg > path')
+     .should('be.visible') 
+     cy.log('chakra present')
+     cy.get('.css-a2c8bh > svg > path').click()
+     cy.log('dark chakra button working')
+     cy.log('theme changing')
+
+     cy.get('.css-1t0t7oo')
+     .should('be.visible')
+     cy.get('.css-1t0t7oo').click()
+     cy.log('light chakra button working')
+     cy.log('theme changing')
+
+
+     // Submit 
+    cy.contains('Submit')
+    .should('be.visible')
+    cy.log('Submit button present')
+
+    cy.contains('Submit').click()
+    cy.go(-1)
+    cy.log('Submit button routing')
+
+    // User
+    cy.get('#menu-button-6').should('be.visible').click()
+    cy.log('User button present and working')
+ 
+    // Login
+    cy.get('#menu-list-6-menuitem-4').should('be.visible').click()
+    cy.log('Logout button present and working')
+
+    // going back after logout to check
+    cy.go(-1)
+    cy.log('Still logged out')
+
+    
+      
+   
 
   })
