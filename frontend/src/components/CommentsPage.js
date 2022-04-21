@@ -71,7 +71,7 @@ const CommentsPage = ({
   }
   console.log(post)
   const {
-    PostId,
+    id: PostId,
     UserId,
     CreatedAt,
     Title,
