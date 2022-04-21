@@ -16,6 +16,11 @@ import (
 )
 
 func createComment(ctx *gin.Context) {
+	if ctx.Request.Header["Authorization"] == nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Comment Fail": "Error"})
+		return
+	}
+
 	comment := new(database.Comment)
 
 	if err := ctx.Bind(comment); err != nil {
@@ -31,20 +36,21 @@ func createComment(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"Comment Failed": err.Error()})
 		return
 	}
+	comment.UserEmail = ctx.Request.Header["Authorization"][0]
 	if !database.CreateComment(*comment) {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"Comment Failed": "Error"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"msg": "Comment added successfully"})
+	ctx.JSON(http.StatusOK, comment)
 }
 
 func getCommentsByPosts(ctx *gin.Context) {
-	comment := new(database.Comment)
+	comment := new(database.Post)
 
 	if err := ctx.Bind(comment); err != nil {
 		var verr validator.ValidationErrors
 		if errors.As(err, &verr) {
+			fmt.Println("HEREE")
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": SimpleErrorMsg(verr)})
 			return
 		}
@@ -145,4 +151,9 @@ func addCommentVote(ctx *gin.Context) {
 		"vote_value": commentVotesData.VoteValue,
 	})
 
+}
+
+func getAllComments(ctx *gin.Context) {
+	postList := database.GetAllComments()
+	ctx.JSON(http.StatusOK, postList)
 }
