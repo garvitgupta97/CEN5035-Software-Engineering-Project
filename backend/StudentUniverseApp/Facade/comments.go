@@ -40,11 +40,12 @@ func createComment(ctx *gin.Context) {
 }
 
 func getCommentsByPosts(ctx *gin.Context) {
-	comment := new(database.Comment)
+	comment := new(database.Post)
 
 	if err := ctx.Bind(comment); err != nil {
 		var verr validator.ValidationErrors
 		if errors.As(err, &verr) {
+			fmt.Println("HEREE")
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": SimpleErrorMsg(verr)})
 			return
 		}
@@ -145,4 +146,9 @@ func addCommentVote(ctx *gin.Context) {
 		"vote_value": commentVotesData.VoteValue,
 	})
 
+}
+
+func getAllComments(ctx *gin.Context) {
+	postList := database.GetAllComments()
+	ctx.JSON(http.StatusOK, postList)
 }
